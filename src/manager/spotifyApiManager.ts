@@ -13,7 +13,7 @@ export default class SpotifyApiManager {
         });
     }
 
-    public static mergeArtistNames(artists: Artist[] | undefined): string {
+    public static formatArtists(artists: Artist[] | undefined): string {
         if (!artists) {
             return "";
         }
@@ -44,32 +44,21 @@ export default class SpotifyApiManager {
         }
     }
 
-    public static formatArtistUrls(artists: Artist[] | undefined): string {
-        if (!artists) {
-            return "";
-        }
-
-        return artists.map(artist => `[View ${artist.name}](${artist.externalURL.spotify})`).join(" • ");
-    }
-
-
     public static async getTrack(id: string): Promise<any> {
         const track = await this.client.tracks.get(id);
 
-        console.log(track);
-
         return {
+            id: track?.id,
             title: track?.name,
-            artist: this.mergeArtistNames(track?.artists),
+            artist: this.formatArtists(track?.artists),
             album: track?.album!.name,
             image: track?.album!.images[0].url,
             url: track?.externalURL.spotify,
             duration: Math.round(track?.duration! / 1000),
             description: [
+                `By ${this.formatArtists(track?.artists)}`,
                 `Track ${track?.trackNumber} of ${track?.album?.totalTracks} on ${track?.album!.name}`,
-                `Released on ${this.reformatDate(track?.album!.releaseDate!, track?.album!.releaseDatePrecision!)}`,
-                `[Listen on Spotify](${track?.externalURL.spotify}) • [Listen to Preview](${track?.previewURL})`,
-                `[View ${track?.album?.name}](${track?.album?.externalURL.spotify}) • ${this.formatArtistUrls(track?.artists)}`
+                `Released on ${this.reformatDate(track?.album!.releaseDate!, track?.album!.releaseDatePrecision!)}`
             ].join("\n")
         }
 

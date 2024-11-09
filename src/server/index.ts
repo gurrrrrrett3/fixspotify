@@ -31,6 +31,8 @@ export default class Webserver {
         this.app.use((req, res, next) => {
             res.setHeader("Access-Control-Allow-Origin", "*");
 
+            console.log(req.headers["user-agent"])
+
             if (req.hostname.startsWith(Webserver.OPEN_SUBDOMAIN + ".") || process.env.DEV_FORCE_OPEN === "true") {
                 openRouter(req, res, next);
             } else {
