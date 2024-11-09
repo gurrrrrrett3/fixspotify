@@ -1,0 +1,9 @@
+* {
+	---bgColor: #000;
+	---textColor: #fff;
+}
+
+body {
+	background-color: var(---bgColor);
+	color: var(---textColor);
+}
