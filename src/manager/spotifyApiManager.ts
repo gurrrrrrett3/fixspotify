@@ -65,13 +65,12 @@ export default class SpotifyApiManager {
             image: track?.album!.images[0].url,
             url: track?.externalURL.spotify,
             duration: Math.round(track?.duration! / 1000),
-            description: `
-               Track ${track?.trackNumber} of ${track?.album?.totalTracks} on ${track?.album!.name} 
-               Released on ${this.reformatDate(track?.album!.releaseDate!, track?.album!.releaseDatePrecision!)}
-               [Listen on Spotify](${track?.externalURL.spotify}) • [Listen to Preview](${track?.previewURL})
-               [View ${track?.album?.name}](${track?.album?.externalURL.spotify}) • ${this.formatArtistUrls(track?.artists)}
-            `
-
+            description: [
+                `Track ${track?.trackNumber} of ${track?.album?.totalTracks} on ${track?.album!.name}`,
+                `Released on ${this.reformatDate(track?.album!.releaseDate!, track?.album!.releaseDatePrecision!)}`,
+                `[Listen on Spotify](${track?.externalURL.spotify}) • [Listen to Preview](${track?.previewURL})`,
+                `[View ${track?.album?.name}](${track?.album?.externalURL.spotify}) • ${this.formatArtistUrls(track?.artists)}`
+            ].join("\n")
         }
 
     }
