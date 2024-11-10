@@ -1,8 +1,8 @@
 import { Server, createServer } from "http";
 import express, { Application } from "express";
 import { resolve } from "path";
-import openRouter from "./routers/open/index.js";
-import indexRouter from "./routers/index/index.js";
+import openRouter from "./routers/open.js";
+import indexRouter from "./routers/index.js";
 
 export default class Webserver {
 
@@ -30,8 +30,6 @@ export default class Webserver {
 
         this.app.use((req, res, next) => {
             res.setHeader("Access-Control-Allow-Origin", "*");
-
-            console.log(req.headers["user-agent"])
 
             if (req.hostname.startsWith(Webserver.OPEN_SUBDOMAIN + ".") || process.env.DEV_FORCE_OPEN === "true") {
                 openRouter(req, res, next);
