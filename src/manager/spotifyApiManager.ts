@@ -69,8 +69,8 @@ export default class SpotifyApiManager {
             url: track.externalURL.spotify,
             description: [
                 `By ${this.formatArtists(track.artists)} • ${this.formatDuration(track.duration!)}`,
-                track.album?.totalTracks == 1 ? `Single` : `Track ${track.trackNumber} of ${track.album!.totalTracks} on ${track.album!.name}`,
-                `Released on ${this.reformatDate(track.album!.releaseDate, track.album!.releaseDatePrecision)}`
+                track.album?.totalTracks == 1 ? `${track.album.name} (Single)` : `Track ${track.trackNumber} of ${track.album!.totalTracks} on ${track.album!.name}`,
+                `Released ${this.reformatDate(track.album!.releaseDate, track.album!.releaseDatePrecision)}`
             ].join("\n")
         }
 
@@ -91,7 +91,7 @@ export default class SpotifyApiManager {
             url: album.externalURL.spotify,
             description: [
                 `By ${this.formatArtists(album.artists)}`,
-                `Released on ${this.reformatDate(album?.releaseDate!, album.releaseDatePrecision!)}`,
+                `Released ${this.reformatDate(album?.releaseDate!, album.releaseDatePrecision!)}`,
                 `${album.totalTracks} tracks`,
                 `${album.genres?.join(", ")}`,
                 ...album.tracks?.slice(0, 10).map((track, index) => {
