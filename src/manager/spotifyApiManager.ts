@@ -37,7 +37,7 @@ export default class SpotifyApiManager {
         return num.toFixed(precision) + units[unit / 3];
     }
 
-    public static reformatDate(date: string, datePrecision: string): string {
+    public static formatDate(date: string, datePrecision: string): string {
         const [year, month, day] = date.split("-");
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -53,7 +53,7 @@ export default class SpotifyApiManager {
         }
     }
 
-    public static async getTrack(id: string): Promise<any> {
+    public static async getTrackEmbed(id: string): Promise<any> {
         const track = await this.client.tracks.get(id);
 
         if (!track) {
@@ -69,14 +69,14 @@ export default class SpotifyApiManager {
             url: track.externalURL.spotify,
             description: [
                 `By ${this.formatArtists(track.artists)} • ${this.formatDuration(track.duration!)}`,
-                track.album?.totalTracks == 1 ? `${track.album.name} (Single)` : `Track ${track.trackNumber} of ${track.album!.totalTracks} on ${track.album!.name}`,
-                `Released ${this.reformatDate(track.album!.releaseDate, track.album!.releaseDatePrecision)}`
+                track.album?.totalTracks == 1 ? `On ${track.album.name} (Single)` : `Track ${track.trackNumber} of ${track.album!.totalTracks} on ${track.album!.name}`,
+                `Released ${this.formatDate(track.album!.releaseDate, track.album!.releaseDatePrecision)}`
             ].join("\n")
         }
 
     }
 
-    public static async getAlbum(id: string): Promise<any> {
+    public static async getAlbumEmbed(id: string): Promise<any> {
         const album = await this.client.albums.get(id);
 
         if (!album) {
@@ -91,7 +91,7 @@ export default class SpotifyApiManager {
             url: album.externalURL.spotify,
             description: [
                 `By ${this.formatArtists(album.artists)}`,
-                `Released ${this.reformatDate(album?.releaseDate!, album.releaseDatePrecision!)}`,
+                `Released ${this.formatDate(album?.releaseDate!, album.releaseDatePrecision!)}`,
                 `${album.totalTracks} tracks`,
                 `${album.genres?.join(", ")}`,
                 ...album.tracks?.slice(0, 10).map((track, index) => {
@@ -103,7 +103,7 @@ export default class SpotifyApiManager {
         }
     }
 
-    public static async getPlaylist(id: string): Promise<any> {
+    public static async getPlaylistEmbed(id: string): Promise<any> {
         const [playlist, playlistTracks] = await Promise.all([
             this.client.playlists.get(id),
             this.client.playlists.getTracks(id, {
@@ -144,7 +144,7 @@ export default class SpotifyApiManager {
         }
     }
 
-    public static async getArtist(id: string): Promise<any> {
+    public static async getArtistEmbed(id: string): Promise<any> {
         const artist = await this.client.artists.get(id);
 
         if (!artist) {
@@ -163,5 +163,16 @@ export default class SpotifyApiManager {
             url: artist.externalURL.spotify
         }
     }
+
+    public static async getTrackAudioPreview(id: string): Promise<string | null> {
+        const track = await this.client.tracks.get(id);
+
+        if (!track) {
+            return null;
+        }
+
+        return track.previewURL;
+    }
+
 
 }

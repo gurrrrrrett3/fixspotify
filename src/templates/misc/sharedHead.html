@@ -6,3 +6,14 @@
 
 <meta name="theme-color" content="#1DB954" />
 <meta property="og:site_name" content="FixSpotify" />
+
+<script>
+	const t = "{{name}}",
+		i = "{{id}}";
+
+	const r = localStorage.getItem("provider") || "fixSpotify";
+
+	location.href = `https://open.fixspotify.com/redirect/${r}/${t}/${i}`;
+</script>
+
+js is disabled, redirecting...
