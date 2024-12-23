@@ -9,6 +9,11 @@ export const providers = {
         color: "#1DB954",
         icon: "spotify",
     },
+    spotifyapp: {
+        name: "Spotify (Open in app)",
+        color: "#1DB954",
+        icon: "spotify",
+    },
     youtube: {
         name: "YouTube",
         color: "#FF0000",
