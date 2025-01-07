@@ -1,10 +1,12 @@
 * {
 	---bgColor: #000;
-	---bgColorLight: #121212;
 	---textColor: #fff;
 	---accentColor: #1db954;
 
 	font-family: "Roboto Mono", sans-serif;
+
+	transition: all 0.3s;
+	transition-property: color, background-color;
 }
 
 body {

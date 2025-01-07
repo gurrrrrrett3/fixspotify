@@ -4,6 +4,7 @@ import TemplateManager from '../../manager/templateManager.js';
 import SpotifyApiManager from '../../manager/spotifyApiManager.js';
 import ProviderManager from '../../manager/providerManager.js';
 import Provider, { ProviderType } from '../../classes/provider.js';
+import fetch from 'node-fetch';
 const openRouter = Router();
 
 openRouter.get("/", (req, res) => {
@@ -80,18 +81,94 @@ openRouter.get("/api/info/:type/:id", async (req, res) => {
 
     switch (type) {
         case ProviderType.Track:
-            res.json(await SpotifyApiManager.client.tracks.get(id));
+
+            const track = await SpotifyApiManager.client.tracks.get(id)
+
+            if (!track) {
+                res.status(404).send("Track not found");
+                return;
+            }
+
+            res.json({
+                name: track.name,
+                artists: track.artists.map(artist => artist.name).join(", "),
+                album: track.album?.name,
+                images: track.album?.images.map((image) => {
+                    return `/api/image/${image.url.split("/").pop()}`;
+                })
+            });
             break;
         case ProviderType.Album:
-            res.json(await SpotifyApiManager.client.albums.get(id));
+            const album = await SpotifyApiManager.client.albums.get(id);
+
+            if (!album) {
+                res.status(404).send("Album not found");
+                return;
+            }
+
+            res.json({
+                name: album.name,
+                artists: album.artists.map(artist => artist.name).join(", "),
+                images: album.images.map((image) => {
+                    return `/api/image/${image.url.split("/").pop()}`;
+                }),
+                tracks: album.tracks?.map((track) => {
+                    return {
+                        id: track.id,
+                        name: track.name,
+                        artists: track.artists.map(artist => artist.name).join(", "),
+                        duration: track.duration
+                    }
+                })
+            });
+
             break;
         case ProviderType.Artist:
-            res.json(await SpotifyApiManager.client.artists.get(id));
+
+            const artist = await SpotifyApiManager.client.artists.get(id);
+
+            if (!artist) {
+                res.status(404).send("Artist not found");
+                return;
+            }
+
+            res.json({
+                name: artist.name,
+                genres: artist.genres?.join(", "),
+                images: artist.images?.map((image) => {
+                    return `/api/image/${image.url.split("/").pop()}`;
+                })
+            });
+
             break;
         case ProviderType.Playlist:
-            res.json(await SpotifyApiManager.client.playlists.get(id));
+
+            const playlist = await SpotifyApiManager.client.playlists.get(id);
+
+            if (!playlist) {
+                res.status(404).send("Playlist not found");
+                return;
+            }
+
+            res.json({
+                name: playlist.name,
+                description: playlist.description,
+                images: playlist.images.map((image) => {
+                    return `/api/image/${image.url.split("/").pop()}`;
+                })
+            });
+
             break;
     }
+})
+
+// get image
+openRouter.get("/api/image/:id", async (req, res) => {
+    const id = req.params.id;
+    const imageRes = await fetch(`https://i.scdn.co/image/${id}`);
+    const imageBuffer = await imageRes.buffer();
+    res.setHeader("Content-Type", "image/jpeg");
+    res.send(imageBuffer);
 })
 
 // get provider list

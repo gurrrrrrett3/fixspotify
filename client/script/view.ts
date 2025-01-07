@@ -1,5 +1,6 @@
 import { Album, Artist, Playlist, Track } from "spotify-api.js"
 import { providers } from "./providers"
+import ColorThief from "colorthief"
 
 const imageElement = document.getElementById("image") as HTMLImageElement
 const titleElement = document.getElementById("title") as HTMLHeadingElement
@@ -49,26 +50,27 @@ function createTrack(options: {
 }
 
 fetch(`/api/info/${type}/${id}`).then(res => res.json()).then(async (data) => {
+    const colorThief = new ColorThief();
     switch (type) {
         case "track": {
-            const track = data as Track
-            imageElement.src = track.album!.images[0].url
+            const track = data
+            imageElement.src = track.images[0]
             titleElement.innerText = track.name
-            descriptionElement.innerText = `${track.artists.map(artist => artist.name).join(", ")} • ${track.album!.name}`
+            descriptionElement.innerText = `${track.artists} • ${track.album}`
             break
         }
         case "album": {
-            const album = data as Album
-            imageElement.src = album.images[0].url
+            const album = data
+            imageElement.src = album.images[0]
             titleElement.innerText = album.name
-            descriptionElement.innerText = album.artists.map(artist => artist.name).join(", ")
+            descriptionElement.innerText = album.artists
 
             album.tracks!.forEach((track, index) => {
                 createTrack({
                     number: index + 1,
                     id: track.id,
                     name: track.name,
-                    artists: track.artists.map(artist => artist.name).join(", "),
+                    artists: track.artists,
                     duration: track.duration
                 })
             })
@@ -77,15 +79,15 @@ fetch(`/api/info/${type}/${id}`).then(res => res.json()).then(async (data) => {
 
         }
         case "artist": {
-            const artist = data as Artist
-            imageElement.src = artist.images![0].url
+            const artist = data
+            imageElement.src = artist.images![0]
             titleElement.innerText = artist.name
-            descriptionElement.innerText = artist.genres!.join(", ")
+            descriptionElement.innerText = artist.genres
             break
         }
         case "playlist": {
-            const playlist = data as Playlist
-            imageElement.src = playlist.images[0].url
+            const playlist = data
+            imageElement.src = playlist.images[0]
             titleElement.innerText = playlist.name
             descriptionElement.innerText = playlist.description!
 
@@ -95,6 +97,13 @@ fetch(`/api/info/${type}/${id}`).then(res => res.json()).then(async (data) => {
             break
         }
     }
+
+    const colors = await getColors(imageElement);
+
+    const style = document.querySelector("head")?.appendChild(document.createElement("style"));
+    const styleSheet = document.styleSheets[document.styleSheets.length - 1] as CSSStyleSheet;
+    styleSheet.insertRule(`* { ---accentColor: ${colors.ac} !important; ---bgColor: ${colors.bg} !important }`, styleSheet.cssRules.length);
+
 })
 
 const providerTypes = ["track", "album", "artist"]
@@ -123,4 +132,46 @@ if (providerTypes.includes(type)) {
 
         providerList.appendChild(providerElement);
     })
+}
+
+function getColors(image: HTMLImageElement): Promise<{
+    ac: string,
+    bg: string,
+}> {
+    return new Promise((resolve, reject) => {
+        const colorThief = new ColorThief();
+
+        if (!image.complete) {
+            image.onload = () => {
+                const color = colorThief.getColor(image);
+                const ac = correctColor(color);
+                const bg = correctColor(color, 8);
+                resolve({
+                    ac: `rgb(${ac[0]}, ${ac[1]}, ${ac[2]})`,
+                    bg: `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`
+                });
+            }
+        } else {
+            const color = colorThief.getColor(image);
+            const ac = correctColor(color);
+            const bg = correctColor(color, 8);
+            resolve({
+                ac: `rgb(${ac[0]}, ${ac[1]}, ${ac[2]})`,
+                bg: `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`
+            });
+        }
+    })
+}
+
+function correctColor(color: number[], targetLuma = 128): number[] {
+    const [r, g, b] = color;
+    let currentLuma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+    if (currentLuma > targetLuma) {
+        const ratio = (currentLuma + 0.05) / (targetLuma + 0.05);
+        return [r / ratio, g / ratio, b / ratio];
+    } else {
+        const ratio = (targetLuma + 0.05) / (currentLuma + 0.05);
+        return [r * ratio, g * ratio, b * ratio];
+    }
 }
