@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		{{sharedHead}}
 
-		<title>{{title}} - {{artist}}</title>
+<head>
+	{{sharedHead}}
 
-		<meta property="og:type" content="music.song" />
-		<meta property="og:title" content="{{title}}" />
-		<meta property="og:description" content="{{description}}" />
-		<meta property="og:image" content="{{image}}" />
-		<meta http-equiv="refresh" content="1;url=https://open.fixspotify.com/view?type={{name}}&id={{id}}" />
-	</head>
+	<title>{{title}} - {{artist}}</title>
+
+	<meta property="og:type" content="music.song" />
+	<meta property="og:title" content="{{title}}" />
+	<meta property="og:description" content="{{description}}" />
+	<meta property="og:image" content="{{image}}" />
+	<meta http-equiv="refresh" content="1;url=https://open.fixspotify.com/redirect/spotify/track/{{id}}" />
+</head>
+
 </html>
