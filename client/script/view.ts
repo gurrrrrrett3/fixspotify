@@ -50,7 +50,6 @@ function createTrack(options: {
 }
 
 fetch(`/api/info/${type}/${id}`).then(res => res.json()).then(async (data) => {
-    const colorThief = new ColorThief();
     switch (type) {
         case "track": {
             const track = data

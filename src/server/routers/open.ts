@@ -15,8 +15,33 @@ openRouter.get("/view", (req, res) => {
     res.sendFile(resolve("./dist/client/pages/view.html"));
 })
 
+const vrchatPlayerUserAgents = [
+    "G Streamer",
+    "NSPlayer",
+    "WMFSDK",
+];
+
 // https://open.spotify.com/track/id
 openRouter.get("/track/:id", async (req, res) => {
+
+    console.log(req.headers["user-agent"]);
+
+    if (vrchatPlayerUserAgents.some((agent) => req.headers["user-agent"]?.includes(agent))) {
+        // vrchat, redirect to youtube
+
+        const url = await ProviderManager.getUrl(ProviderType.Track, "youtube", req.params.id);
+
+        if (!url) {
+            res.status(404).send("Track not found");
+            return;
+        }
+
+        console.log(url);
+        res.redirect(url);
+
+        return;
+    }
+
     res.send(TemplateManager.getTemplate("track", await SpotifyApiManager.getTrackEmbed(req.params.id)));
 })
 
