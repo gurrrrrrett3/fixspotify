@@ -8,12 +8,7 @@
 <meta property="og:site_name" content="FixSpotify" />
 
 <script>
-	const t = "{{name}}",
-		i = "{{id}}";
-
-	const r = localStorage.getItem("provider") || "fixSpotify";
-
-	location.href = `https://open.fixspotify.com/redirect/${r}/${t}/${i}`;
+	location.href = `https://open.fixspotify.com/redirect/${localStorage.getItem("provider") || "fixSpotify"}/{{name}}/{{id}}`;
 </script>
 
 js is disabled, redirecting...
