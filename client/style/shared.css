@@ -219,3 +219,22 @@ code {
 .track .track-duration {
 	font-size: 1rem;
 }
+
+.moreinfo {
+	color: var(---accentColor);
+	cursor: pointer;
+	border: 2px solid var(---accentColor);
+	border-radius: 5px;
+	padding: 0.2rem 0.4rem;
+}
+
+.moreinfo:hover {
+	background-color: var(---accentColor);
+	color: var(---bgColor);
+}
+
+.hint {
+	color: var(---accentColor);
+	font-size: 0.8rem;
+	padding-left: 2rem;
+}

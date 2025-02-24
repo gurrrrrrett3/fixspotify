@@ -53,14 +53,14 @@ fetch(`/api/info/${type}/${id}`).then(res => res.json()).then(async (data) => {
     switch (type) {
         case "track": {
             const track = data
-            imageElement.src = track.images[0]
+            imageElement.src = track.albumArt
             titleElement.innerText = track.name
             descriptionElement.innerText = `${track.artists} • ${track.album}`
             break
         }
         case "album": {
             const album = data
-            imageElement.src = album.images[0]
+            imageElement.src = album.albumArt
             titleElement.innerText = album.name
             descriptionElement.innerText = album.artists
 

@@ -5,7 +5,22 @@ import SpotifyApiManager from '../../manager/spotifyApiManager.js';
 import ProviderManager from '../../manager/providerManager.js';
 import Provider, { ProviderType } from '../../classes/provider.js';
 import fetch from 'node-fetch';
+import { TrackCache } from '../../cache/impl/track.js';
+import { AlbumCache } from '../../cache/impl/album.js';
 const openRouter = Router();
+
+openRouter.use((req: Request, res: Response, next: NextFunction) => {
+    console.log(`[OPEN] ${req.method} ${req.path}`);
+    // res.redirect("https://fixspotify.com/");
+
+    const pathParts = req.path.split("/").filter(part => part !== "");
+    if (pathParts[0] && pathParts[0].startsWith("intl-")) {
+        req.url = req.url.replace(`/${pathParts[0]}`, "");
+        req.headers["accept-language"] = pathParts[0].replace("intl-", "");
+    }
+
+    next();
+})
 
 openRouter.get("/", (req, res) => {
     res.sendFile(resolve("./dist/client/pages/config.html"));
@@ -15,33 +30,8 @@ openRouter.get("/view", (req, res) => {
     res.sendFile(resolve("./dist/client/pages/view.html"));
 })
 
-const vrchatPlayerUserAgents = [
-    "G Streamer",
-    "NSPlayer",
-    "WMFSDK",
-];
-
 // https://open.spotify.com/track/id
 openRouter.get("/track/:id", async (req, res) => {
-
-    console.log(req.headers["user-agent"]);
-
-    if (vrchatPlayerUserAgents.some((agent) => req.headers["user-agent"]?.includes(agent))) {
-        // vrchat, redirect to youtube
-
-        const url = await ProviderManager.getUrl(ProviderType.Track, "youtube", req.params.id);
-
-        if (!url) {
-            res.status(404).send("Track not found");
-            return;
-        }
-
-        console.log(url);
-        res.redirect(url);
-
-        return;
-    }
-
     res.send(TemplateManager.getTemplate("track", await SpotifyApiManager.getTrackEmbed(req.params.id)));
 })
 
@@ -107,7 +97,7 @@ openRouter.get("/api/info/:type/:id", async (req, res) => {
     switch (type) {
         case ProviderType.Track:
 
-            const track = await SpotifyApiManager.client.tracks.get(id)
+            const track = await TrackCache.getOrFetch(id);
 
             if (!track) {
                 res.status(404).send("Track not found");
@@ -116,15 +106,13 @@ openRouter.get("/api/info/:type/:id", async (req, res) => {
 
             res.json({
                 name: track.name,
-                artists: track.artists.map(artist => artist.name).join(", "),
-                album: track.album?.name,
-                images: track.album?.images.map((image) => {
-                    return `/api/image/${image.url.split("/").pop()}`;
-                })
+                artists: track.artists,
+                album: track.album,
+                albumArt: `/api/image/${track.albumArt}`,
             });
             break;
         case ProviderType.Album:
-            const album = await SpotifyApiManager.client.albums.get(id);
+            const album = await AlbumCache.getOrFetch(id);
 
             if (!album) {
                 res.status(404).send("Album not found");
@@ -133,18 +121,14 @@ openRouter.get("/api/info/:type/:id", async (req, res) => {
 
             res.json({
                 name: album.name,
-                artists: album.artists.map(artist => artist.name).join(", "),
-                images: album.images.map((image) => {
-                    return `/api/image/${image.url.split("/").pop()}`;
-                }),
-                tracks: album.tracks?.map((track) => {
-                    return {
-                        id: track.id,
-                        name: track.name,
-                        artists: track.artists.map(artist => artist.name).join(", "),
-                        duration: track.duration
-                    }
-                })
+                artists: album.artists,
+                images: album.images.map((image) => `/api/image/${image}`),
+                tracks: album.tracks?.map((track) => ({
+                    id: track.id,
+                    name: track.name,
+                    artists: track.artists,
+                    duration: track.duration
+                }))
             });
 
             break;

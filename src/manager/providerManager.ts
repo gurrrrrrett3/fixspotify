@@ -2,6 +2,8 @@ import { resolve } from "path";
 import Provider, { ProviderType } from "../classes/provider.js";
 import { readdirSync } from "fs";
 import SpotifyApiManager from "./spotifyApiManager.js";
+import { TrackCache } from "../cache/impl/track.js";
+import { AlbumCache } from "../cache/impl/album.js";
 
 export default class ProviderManager {
     public static providers: Record<string, Provider> = {}
@@ -27,22 +29,22 @@ export default class ProviderManager {
 
         switch (type) {
             case ProviderType.Track: {
-                const track = await SpotifyApiManager.client.tracks.get(id)
+                const track = await TrackCache.getOrFetch(id)
                 if (!track) return undefined;
 
                 return ProviderManager.providers[provider].get(type, {
                     name: track.name,
-                    artist: track.artists[0].name,
+                    artist: track.artists.split(", ")[0],
                     id
                 })
             }
             case ProviderType.Album: {
-                const album = await SpotifyApiManager.client.albums.get(id)
+                const album = await AlbumCache.getOrFetch(id)
                 if (!album) return undefined;
 
                 return ProviderManager.providers[provider].get(type, {
                     name: album.name,
-                    artist: album.artists[0].name,
+                    artist: album.artists.split(", ")[0],
                     id
                 })
             }

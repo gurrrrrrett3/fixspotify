@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<link rel="stylesheet" href="../style/shared.css" />
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-			rel="stylesheet"
-		/>
+	<link rel="stylesheet" href="../style/shared.css" />
 
-		<script type="module" src="../script/view.ts" defer></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+		rel="stylesheet" />
 
-		<title>fixSpotify | view</title>
-	</head>
-	<body>
-		<div class="navbar">
-			<a href="https://fixspotify.com">home</a>
-			<a href="https://open.fixspotify.com">config</a>
-			<a href="https://gart.sh/l/fixspotify">source</a>
-		</div>
+	<script type="module" src="../script/view.ts" defer></script>
 
-		<div class="view-container">
-			<div class="header-container">
-				<img id="image" src="" alt="artist/album/playlist image" />
+	<title>fixSpotify | view</title>
+</head>
 
-				<div class="info-container">
-					<h1 id="title">title</h1>
-					<p id="description">description</p>
-				</div>
-			</div>
+<body>
+	<div class="navbar">
+		<a href="https://fixspotify.com">home</a>
+		<a href="https://open.fixspotify.com">config</a>
+		<a href="https://gart.sh/l/fixspotify">source</a>
+	</div>
 
-			<div class="track-container" id="tracks">
-				<a id="track-template" class="track" hidden>
-					<span class="track-number"></span>
-					<span class="track-title"></span>
-					<span class="seperator"> • </span>
-					<span class="track-artist"></span>
-					<span class="seperator"> • </span>
-					<span class="track-duration"></span>
-				</a>
+	<div class="view-container">
+		<div class="header-container">
+			<img id="image" src="" alt="artist/album/playlist image" />
+
+			<div class="info-container">
+				<h1 id="title">title</h1>
+				<p id="description">description</p>
 			</div>
 		</div>
 
-		<div class="provider-list" id="providerlist"></div>
-	</body>
+		<div class="track-container" id="tracks">
+			<a id="track-template" class="track" hidden>
+				<span class="track-number"></span>
+				<span class="track-title"></span>
+				<span class="seperator"> • </span>
+				<span class="track-artist"></span>
+				<span class="seperator"> • </span>
+				<span class="track-duration"></span>
+			</a>
+		</div>
+	</div>
+
+	<div class="provider-list" id="providerlist"></div>
+	<p class="hint">don't want to see this page? click <a href="https://open.fixspotify.com">here</a> to change your
+		default platform!</p>
+</body>
+
 </html>

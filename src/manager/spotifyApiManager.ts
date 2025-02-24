@@ -1,4 +1,6 @@
 import { Artist, Client, Track } from "spotify-api.js";
+import { TrackCache } from "../cache/impl/track.js";
+import { AlbumCache } from "../cache/impl/album.js";
 
 export default class SpotifyApiManager {
 
@@ -54,7 +56,7 @@ export default class SpotifyApiManager {
     }
 
     public static async getTrackEmbed(id: string): Promise<any> {
-        const track = await this.client.tracks.get(id);
+        const track = await TrackCache.getOrFetch(id);
 
         if (!track) {
             return null;
@@ -63,21 +65,21 @@ export default class SpotifyApiManager {
         return {
             id: track.id,
             title: track.name,
-            artist: this.formatArtists(track.artists),
-            album: track.album!.name,
-            image: track.album!.images[0].url,
-            url: track.externalURL.spotify,
+            artist: track.artists,
+            album: track.album,
+            image: `https://i.scdn.co/image/${track.albumArt}`,
+            url: track.url,
             description: [
-                `By ${this.formatArtists(track.artists)} • ${this.formatDuration(track.duration!)}`,
-                track.album?.totalTracks == 1 ? `On ${track.album.name} (Single)` : `Track ${track.trackNumber} of ${track.album!.totalTracks} on ${track.album!.name}`,
-                `Released ${this.formatDate(track.album!.releaseDate, track.album!.releaseDatePrecision)}`
+                `By ${track.artists} • ${track.duration}`,
+                track.totalTracks == 1 ? `On ${track.album} (Single)` : `Track ${track.trackNumber} of ${track.totalTracks} on ${track.album}`,
+                `Released ${track.releaseDate}`
             ].join("\n")
         }
 
     }
 
     public static async getAlbumEmbed(id: string): Promise<any> {
-        const album = await this.client.albums.get(id);
+        const album = await AlbumCache.getOrFetch(id);
 
         if (!album) {
             return null;
@@ -86,16 +88,16 @@ export default class SpotifyApiManager {
         return {
             id: album.id,
             title: album.name,
-            artist: this.formatArtists(album.artists),
-            image: album.images[0].url,
-            url: album.externalURL.spotify,
+            artist: album.artists,
+            image: `https://i.scdn.co/image/${album.art}`,
+            url: album.url,
             description: [
-                `By ${this.formatArtists(album.artists)}`,
-                `Released ${this.formatDate(album?.releaseDate!, album.releaseDatePrecision!)}`,
+                `By ${album.artists}`,
+                `Released ${album.releaseDate}`,
                 `${album.totalTracks} tracks`,
-                `${album.genres?.join(", ")}`,
+                `${album.genres || ""}`,
                 ...album.tracks?.slice(0, 10).map((track, index) => {
-                    return `${index + 1}. ${track.name} • ${this.formatDuration(track.duration)}`
+                    return `${index + 1}. ${track.name} • ${track.duration}`
                 }) || "",
                 '',
                 album.tracks?.length! > 10 ? `${album.tracks?.length! - 10} more...` : ""
