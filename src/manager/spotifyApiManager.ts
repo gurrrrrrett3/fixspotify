@@ -80,7 +80,7 @@ export default class SpotifyApiManager {
             releaseDate: track.releaseDate,
         });
 
-        StatsManager.addRequest("track", track.name, track.artists, `https://i.scdn.co/image/${track.albumArt}`, track.url);
+        StatsManager.addRequest("track", track.id, track.name, track.artists, `https://i.scdn.co/image/${track.albumArt}`);
 
         return {
             id: track.id,
@@ -112,7 +112,7 @@ export default class SpotifyApiManager {
             releaseDate: album.releaseDate,
         });
 
-        StatsManager.addRequest("album", album.name, album.artists, `https://i.scdn.co/image/${album.art}`, album.url);
+        StatsManager.addRequest("album", album.id, album.name, album.artists, `https://i.scdn.co/image/${album.art}`);
 
         return {
             id: album.id,
@@ -154,7 +154,7 @@ export default class SpotifyApiManager {
             tracks: playlist.totalTracks
         });
 
-        StatsManager.addRequest("playlist", playlist.name, playlist.owner.displayName || "", playlist.images[0].url, playlist.externalURL.spotify);
+        StatsManager.addRequest("playlist", playlist.id, playlist.name, playlist.owner.displayName || "", playlist.images[0].url);
 
         const tracks = (await this.client.tracks.getMultiple(playlistTracks.map(track => track.track!.id))).reduce((acc, track) => {
             acc[track.id] = track;
@@ -203,7 +203,7 @@ export default class SpotifyApiManager {
             popularity: artist.popularity
         });
 
-        StatsManager.addRequest("artist", artist.name, artist.genres?.join(", ") || "", artist.images![0].url, artist.externalURL.spotify);
+        StatsManager.addRequest("artist", artist.id, artist.name, artist.genres?.join(", ") || "", artist.images![0].url);
 
         return {
             id: artist.id,
