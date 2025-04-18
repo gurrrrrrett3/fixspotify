@@ -66,8 +66,6 @@ export default class AnalyticsManager {
 
                 }
             })
-
-
         })
 
         CacheAnalytics.init()
