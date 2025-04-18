@@ -43,9 +43,18 @@ export default class Webserver {
     }
 
     public start(): void {
+
+        this.server.on("error", (err) => {
+            if ((err as any).code === "EADDRINUSE") {
+                console.error(`Port ${Webserver.PORT} is already in use. Please check if another instance of the server is running.`);
+                return;
+            }
+            console.error(err);
+        });
+
         this.server.listen(Webserver.PORT, () => {
             console.log(`Server started on port ${Webserver.PORT}`);
-        });
+        })
     }
 
 }

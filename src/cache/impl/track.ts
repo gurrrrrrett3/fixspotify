@@ -35,5 +35,7 @@ export const TrackCache = new UpdateableCache<MinimalTrack>(async (id: string) =
         releaseDate: SpotifyApiManager.formatDate(track.album!.releaseDate, track.album!.releaseDatePrecision),
         url: track.externalURL.spotify
     }
+}, {
+    staleDataThreshold: -1,
 });
 

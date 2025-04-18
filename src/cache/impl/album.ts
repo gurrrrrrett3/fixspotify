@@ -47,4 +47,6 @@ export const AlbumCache = new UpdateableCache<MinimalAlbum>(async (id: string) =
         art: album.images[0].url,
         images: album.images.map((image) => image.url.split("/").pop()!)
     }
+}, {
+    staleDataThreshold: -1,
 });

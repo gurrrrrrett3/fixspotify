@@ -4,6 +4,7 @@ import { resolve } from "path"
 export default class TemplateManager {
     public static templates: Record<string, string> = {}
     public static readonly sharedHead = readFileSync(resolve("./src/templates/misc/sharedHead.html"), "utf-8").replace(/[\n\t]/g, "")
+    public static readonly playlistHead = readFileSync(resolve("./src/templates/misc/playlistHead.html"), "utf-8").replace(/[\n\t]/g, "")
 
     public static loadTemplates(): void {
         const pagesDir = resolve("./src/templates/pages")
@@ -25,6 +26,7 @@ export default class TemplateManager {
         let template = TemplateManager.templates[name]
 
         template = template.replace("{{sharedHead}}", TemplateManager.sharedHead)
+        template = template.replace("{{playlistHead}}", TemplateManager.playlistHead)
 
         for (const key in data) {
             template = template.replace(new RegExp(`{{${key}}}`, "g"), data[key])

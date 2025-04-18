@@ -1,6 +1,7 @@
 import { Artist, Client, Track } from "spotify-api.js";
 import { TrackCache } from "../cache/impl/track.js";
 import { AlbumCache } from "../cache/impl/album.js";
+import AnalyticsManager from "../analytics/analyticsManager.js";
 
 export default class SpotifyApiManager {
 
@@ -11,6 +12,13 @@ export default class SpotifyApiManager {
             token: {
                 clientID: process.env.SPOTIFY_CLIENT_ID as string,
                 clientSecret: process.env.SPOTIFY_CLIENT_SECRET as string
+            },
+            retryOnRateLimit: false,
+            cacheSettings: {
+                albums: true,
+                artists: true,
+                tracks: true,
+                playlists: true,
             }
         });
     }
@@ -62,6 +70,15 @@ export default class SpotifyApiManager {
             return null;
         }
 
+        AnalyticsManager.sendEvent("track", {
+            id: track.id,
+            name: track.name,
+            artists: track.artists,
+            album: track.album,
+            duration: track.duration,
+            releaseDate: track.releaseDate,
+        });
+
         return {
             id: track.id,
             title: track.name,
@@ -84,6 +101,13 @@ export default class SpotifyApiManager {
         if (!album) {
             return null;
         }
+
+        AnalyticsManager.sendEvent("album", {
+            id: album.id,
+            name: album.name,
+            artists: album.artists,
+            releaseDate: album.releaseDate,
+        });
 
         return {
             id: album.id,
@@ -117,6 +141,13 @@ export default class SpotifyApiManager {
             return null;
         }
 
+        AnalyticsManager.sendEvent("playlist", {
+            id: playlist.id,
+            name: playlist.name,
+            description: playlist.description,
+            owner: playlist.owner.displayName,
+            tracks: playlist.totalTracks
+        });
 
         const tracks = (await this.client.tracks.getMultiple(playlistTracks.map(track => track.track!.id))).reduce((acc, track) => {
             acc[track.id] = track;
@@ -136,6 +167,10 @@ export default class SpotifyApiManager {
                         return "";
                     }
                     let track = tracks[playlistTrack.track?.id];
+                    if (!track) {
+                        return "";
+                    }
+
                     return `${index + 1}. ${playlistTrack.track?.name} • ${this.formatArtists(track.artists)} • ${this.formatDuration(track.duration)}`
                 }),
                 '',
@@ -152,6 +187,14 @@ export default class SpotifyApiManager {
         if (!artist) {
             return null;
         }
+
+        AnalyticsManager.sendEvent("artist", {
+            id: artist.id,
+            name: artist.name,
+            genres: artist.genres?.join(", ") || "",
+            totalFollowers: artist.totalFollowers,
+            popularity: artist.popularity
+        });
 
         return {
             id: artist.id,

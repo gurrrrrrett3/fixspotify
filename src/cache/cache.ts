@@ -158,8 +158,10 @@ export default class Cache<CachedType, CacheKey = string> {
             pruneEnabled: this._pruneEnabled,
             staleDataThreshold: this._staleDataThreshold,
             lastPrune: this._lastPrune,
+            requests: this._hits + this._misses,
             hits: this._hits,
             misses: this._misses,
+            hitRate: this._hits / (this._hits + this._misses),
         };
     }
 }

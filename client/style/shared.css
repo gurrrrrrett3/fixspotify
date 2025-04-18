@@ -238,3 +238,7 @@ code {
 	font-size: 0.8rem;
 	padding-left: 2rem;
 }
+
+.hint > .seperator {
+	color: var(---textColor);
+}

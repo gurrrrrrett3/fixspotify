@@ -7,11 +7,16 @@ import Provider, { ProviderType } from '../../classes/provider.js';
 import fetch from 'node-fetch';
 import { TrackCache } from '../../cache/impl/track.js';
 import { AlbumCache } from '../../cache/impl/album.js';
+import { maintenanceMode } from '../../index.js';
 const openRouter = Router();
 
 openRouter.use((req: Request, res: Response, next: NextFunction) => {
     console.log(`[OPEN] ${req.method} ${req.path}`);
-    // res.redirect("https://fixspotify.com/");
+
+    if (maintenanceMode) {
+        res.sendFile(resolve("./dist/client/pages/down.html"));
+        return;
+    }
 
     const pathParts = req.path.split("/").filter(part => part !== "");
     if (pathParts[0] && pathParts[0].startsWith("intl-")) {
