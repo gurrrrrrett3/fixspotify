@@ -40,7 +40,7 @@ export default class StatsManager {
             url
         });
 
-        if (this.lastRequests.length > 100) {
+        if (this.lastRequests.length > 25) {
             this.lastRequests.pop();
         }
 
