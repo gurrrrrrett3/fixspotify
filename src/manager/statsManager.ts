@@ -24,12 +24,12 @@ export default class StatsManager {
     public static saveInterval: NodeJS.Timeout | null = null;
     public static saveIntervalTime: number = 1000 * 60 * 5; // 5 minutes
 
-    public static addRequest(type: 'track' | 'album' | 'artist' | 'playlist', name: string, description: string, image: string, url: string) {
+    public static addRequest(type: 'track' | 'album' | 'artist' | 'playlist', id: string, name: string, description: string, image: string) {
 
         this.addCount(type);
 
         // check if it already exists with the same url
-        if (this.lastRequests.find((request) => request.url === url)) return;
+        if (this.lastRequests.find((request) => request.url === id)) return;
 
         this.lastRequests.unshift({
             addedAt: Date.now(),
@@ -37,7 +37,7 @@ export default class StatsManager {
             name,
             description,
             image,
-            url
+            url: type === "playlist" ? `https://open.spotify.com/playlist/${id}` : `https://open.fixspotify.com/view?type=${type}&id=${id}`
         });
 
         if (this.lastRequests.length > 25) {
