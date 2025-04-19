@@ -6,10 +6,12 @@
 }
 
 .discord-embed > span {
+	font-size: 1.25rem;
 	text-transform: uppercase;
 }
 
 .embed {
+	width: 100%;
 	padding: 1rem;
 	border: 1px solid var(--softGrey);
 	border-radius: 0.5rem;
@@ -17,6 +19,7 @@
 	display: flex;
 	flex-direction: row;
 	gap: 1rem;
+	font-size: 0.875rem;
 }
 
 .embed > div {
@@ -28,6 +31,7 @@
 }
 
 .embed .content {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
@@ -38,6 +42,7 @@
 }
 
 .embed .content .infos {
+	width: 100%;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -51,6 +56,7 @@
 
 .embed .content p {
 	color: var(--linkBlue);
+	font-size: 0.875rem;
 	font-weight: 300;
 }
 

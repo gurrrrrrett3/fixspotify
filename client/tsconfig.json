@@ -1,12 +1,25 @@
 {
   "compilerOptions": {
-    "moduleResolution": "bundler",
-    "target": "es2015",
+    "moduleResolution": "Node16",
+    "target": "ES2022",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "noEmit": true,
-    "typeRoots": ["./types"]
+    "typeRoots": ["./types"],
+    "module": "Node16",
+    "lib": ["ES2017", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "removeComments": true,
+    "preserveSymlinks": true,
+    "alwaysStrict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["**/*.ts", "**/*.d.ts"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }

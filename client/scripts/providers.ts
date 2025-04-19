@@ -11,7 +11,7 @@ import musicbrainz from '../assets/icons/musicbrainz.svg';
 
 export const providers = {
     fixSpotify: {
-        name: "FixSpotify (default)",
+        name: "FixSpotify",
         color: "#1DB954",
         icon: fixspotify,
     },

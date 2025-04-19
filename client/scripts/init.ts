@@ -1,14 +1,18 @@
-import { initNav } from '../components/nav'
-import { initDisclaimer } from '../components/disclaimer'
-import { initStats } from '../components/stats'
-import { initSocials } from '../components/socials'
-import { initDiscordEmbed } from '../components/discordEmbed'
+import { initNav } from '../components/nav.ts'
+import { initDisclaimer } from '../components/disclaimer.ts'
+import { initStats } from '../components/stats.ts'
+import { initSocials } from '../components/socials.ts'
+import { initDiscordEmbed } from '../components/discordEmbed.ts'
+import { initAvailableProviders } from '../components/availableProviders.ts'
+import { initDisabledProviders } from '../components/disabledProviders.ts'
 
-export { initNav } from '../components/nav'
-export { initDisclaimer } from '../components/disclaimer'
-export { initStats } from '../components/stats'
-export { initSocials } from '../components/socials'
-export { initDiscordEmbed } from '../components/discordEmbed'
+export { initNav } from '../components/nav.ts'
+export { initDisclaimer } from '../components/disclaimer.ts'
+export { initStats } from '../components/stats.ts'
+export { initSocials } from '../components/socials.ts'
+export { initDiscordEmbed } from '../components/discordEmbed.ts'
+export { initAvailableProviders } from '../components/availableProviders.ts'
+export { initDisabledProviders } from '../components/disabledProviders.ts'
 
 export function initComponents() {
   initNav()
@@ -16,6 +20,8 @@ export function initComponents() {
   initStats()
   initSocials()
   initDiscordEmbed()
+  initAvailableProviders()
+  initDisabledProviders()
 }
 
 initComponents();

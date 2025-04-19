@@ -1,4 +1,4 @@
-import { providers } from "./providers"
+import { providers } from "./providers.ts"
 const providerList = document.getElementById("providerlist") as HTMLDivElement;
 
 let selectedProvider = localStorage.getItem("provider") || "fixspotify";

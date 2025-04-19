@@ -12,7 +12,7 @@ export function initDiscordEmbed() {
             <span>gart</span>
             <span>Today at 7:21 PM</span>
           </section>
-          <p>https://open.spotify.com/intl-fr/track/1J4RXX9fjPliGlHzvXlKtN?si=8c85a21a0c6e4c06</p>
+          <p>https://open.spotify.com/intl-fr/track/05FpQ41MVtDd1Ft63DZNuv?si=eac825c45b6e4331</p>
         </section>
       </section>
       <span>After</span>
@@ -23,7 +23,7 @@ export function initDiscordEmbed() {
             <span>gart</span>
             <span>Today at 7:21 PM</span>
           </section>
-          <p>https://open.fixspotify.com/view?type=track&id=1J4RXX9fjPliGlHzvXlKtN</p>
+          <p>https://open.fixspotify.com/intl-fr/track/05FpQ41MVtDd1Ft63DZNuv?si=eac825c45b6e4331</p>
           <section class="fixspotify-embed">
             <section class="infos">
               <span>FixSpotify</span>

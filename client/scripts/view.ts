@@ -1,5 +1,5 @@
 import { Album, Artist, Playlist, Track } from "spotify-api.js"
-import { providers } from "./providers"
+import { providers } from "./providers.ts"
 import ColorThief from "colorthief"
 
 const imageElement = document.getElementById("image") as HTMLImageElement
