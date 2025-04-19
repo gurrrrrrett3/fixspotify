@@ -34,7 +34,7 @@ export function initDiscordEmbed() {
                 <span>Released October 30, 2020</span>
               </section>
             </section>
-            <img src="${cover}" alt="SALEM - Fires in Heaven Cover" />
+            <img src="${cover}" alt="Cover of Fires in Heaven by SALEM" />
         </section>
       </section>
     </section>

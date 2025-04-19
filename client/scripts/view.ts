@@ -63,7 +63,6 @@ fetch(`/api/info/${type}/${id}`).then(res => res.json()).then(async (data) => {
             imageElement.src = album.albumArt
             titleElement.innerText = album.name
             descriptionElement.innerText = album.artists
-
             album.tracks!.forEach((track, index) => {
                 createTrack({
                     number: index + 1,
@@ -73,7 +72,6 @@ fetch(`/api/info/${type}/${id}`).then(res => res.json()).then(async (data) => {
                     duration: track.duration
                 })
             })
-
             break
 
         }
@@ -89,10 +87,7 @@ fetch(`/api/info/${type}/${id}`).then(res => res.json()).then(async (data) => {
             imageElement.src = playlist.images[0]
             titleElement.innerText = playlist.name
             descriptionElement.innerText = playlist.description!
-
             // need to fetch tracks
-
-
             break
         }
     }

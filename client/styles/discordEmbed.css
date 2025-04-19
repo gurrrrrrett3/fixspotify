@@ -96,3 +96,9 @@
 	aspect-ratio: 1/1;
 	border-radius: 0.25rem;
 }
+
+@media (max-width: 768px) {
+	.embed .content .fixspotify-embed {
+		font-size: 0.75rem;
+	}
+}

@@ -3,32 +3,40 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="refresh" content="5;url=https://fixspotify.com" />
+		
+    <meta name="theme-color" content="#1DB954" />
+    <meta property="og:site_name" content="fixSpotify" />
+    <meta property="og:title" content="Whoops!" />
+    <meta property="og:description" content="We couldn't find that one, sorry!" />
 
-		<link rel="stylesheet" href="../styles/shared.css" />
-
+		<link rel="icon" type="image/svg+xml" href="../assets/icons/fixspotify.svg">
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-			rel="stylesheet"
-		/>
-
-		<meta http-equiv="refresh" content="5;url=https://fixspotify.com" />
-
-		<title>fixSpotify | error</title>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://rsms.me/">
+		<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+		<link rel="stylesheet" href="../styles/shared.css" />
+		<script src="../scripts/init.ts" type="module"></script>
+		<title>fixSpotify | Error</title>
 	</head>
 	<body>
-		<div class="navbar">
-			<a href="https://fixspotify.com">home</a>
-			<a href="/" class="active">config</a>
-			<a href="https://gart.sh/l/fixspotify">source</a>
-		</div>
-
-		<div class="config-container">
-			<div class="content">
+		<section id="nav-container"></section>
+		<section class="grid-wrapper">
+			<aside>
+				<section class="about">
+					<p>Enhances Spotify link sharing by improving how links appear on platforms like Discord.</p>
+					<p>By simply replacing <span style="color: var(--softGrey)">open.spotify.com</span> with <span style="color: var(--accentColor)">open.fixspotify.com</span> in your shared links, fixSpotify ensures that your Spotify links display correctly and consistently.</p>
+				</section>
+				<section id="stats-container"></section>
+				<section id="disclaimer-container"></section>
+				<section id="socials-container"></section>
+			</aside>
+			<main>
 				<h2>Whoops!</h2>
 				<p>We couldn't find that one, sorry! Redirecting you back to the home page in a few seconds...</p>
-			</div>
-		</div>
+			</main>
+		</section>
 	</body>
 </html>
