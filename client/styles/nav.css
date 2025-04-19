@@ -4,7 +4,6 @@ nav {
 	justify-content: flex-start;
 	align-items: center;
 	gap: 2rem;
-	padding: 1rem;
 }
 
 nav .logo {
@@ -51,4 +50,10 @@ nav .nav-menu .nav-link.active {
   border: 1px solid var(--light);
   background-color: var(--accentColor);
   color: var(--light);
+}
+
+@media (max-width: 768px) {
+	nav {
+		gap: 1rem;
+	}
 }

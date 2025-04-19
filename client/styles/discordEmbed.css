@@ -1,0 +1,92 @@
+.discord-embed{
+	width: fit-content;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.discord-embed > span {
+	text-transform: uppercase;
+}
+
+.embed {
+	padding: 1rem;
+	border: 1px solid var(--softGrey);
+	border-radius: 0.5rem;
+	background-color: var(--dark);
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.embed > div {
+	width: 32px;
+	height: 32px;
+	aspect-ratio: 1/1;
+	border-radius: 100%;
+	background-color: var(--accentColor);
+}
+
+.embed .content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.embed .content * {
+	font-family: 'Inter', sans-serif;
+}
+
+.embed .content .infos {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.embed .content .infos > span:last-child {
+	color: var(--softGrey);
+	font-size: 0.875rem;
+}
+
+.embed .content p {
+	color: var(--linkBlue);
+	font-weight: 300;
+}
+
+.embed .content .fixspotify-embed {
+	width: fit-content;
+	padding: 1rem;
+	border-left: 3px solid var(--accentColor);
+	border-radius: 0.5rem;
+	background-color: var(--discordGrey);
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+	font-size: 0.875rem;
+	font-weight: 300;
+}
+
+.embed .content .fixspotify-embed .infos {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1rem;
+}
+
+.embed .content .fixspotify-embed .infos .track-name {
+	color: var(--linkBlue);
+	font-weight: 500;
+}
+
+.embed .content .fixspotify-embed .infos .details {
+	display: flex;
+	flex-direction: column;
+}
+
+.embed .content .fixspotify-embed img {
+	width: 96px;
+	height: 96px;
+	aspect-ratio: 1/1;
+	border-radius: 0.25rem;
+}

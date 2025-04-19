@@ -1,10 +1,14 @@
-export function injectDisclaimer() {
+import '../styles/disclaimer.css'
+
+export function initDisclaimer() {
   const disclaimer = `
-    <span class="disclaimer">This tool is not affiliated with Spotify.</span>
+    <section class="disclaimer">
+      <span>This tool is not affiliated with Spotify.</span>
+    </section>
   `;
   const disclaimerContainer = document.getElementById('disclaimer-container');
   if (disclaimerContainer) {
       disclaimerContainer.innerHTML = disclaimer;
   }
 }
-injectDisclaimer();
+initDisclaimer();

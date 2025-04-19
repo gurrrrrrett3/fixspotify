@@ -1,7 +1,7 @@
 import '../styles/nav.css'
 import fixspotify from '../assets/icons/fixspotify.svg';
 
-export function injectNav() {
+export function initNav() {
   const nav = `
     <nav>
       <a href="https://fixspotify.com" class="logo">
@@ -28,4 +28,4 @@ export function injectNav() {
   }
 
 }
-injectNav();
+initNav();
