@@ -1,0 +1,318 @@
+:root {
+	--dark: #121212;
+	--light: #FFFFFF;
+	--accentColor: #1DB954;
+	--discordGrey: #1F1F1F;
+	--softGrey: #747474;
+	--linkBlue: #0EA8F1;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Roboto Mono", sans-serif;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	background: url("../assets/images/background.webp") no-repeat center center fixed;
+	background-size: cover;
+	color: var(--light);
+}
+
+a {
+	color: var(--light);
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+}
+
+main {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	padding: 1rem;
+}
+
+main aside {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+main aside .disclaimer {
+	padding: 0.125rem 0.5rem;
+	width: fit-content;
+	background-color: var(--accentColor);
+	color: var(--dark);
+	border-radius: 0.25rem;
+	font-size: 0.875rem;
+	text-transform: uppercase;
+}
+
+main aside .stats {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+main aside .stats .stats-title {
+	text-transform: uppercase;
+}
+
+main aside .stats .stats-panel {
+	width: 50%;
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+main aside .stats .stats-panel > section {
+	padding: 0.5rem;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+	background-color: var(--discordGrey);
+	border: 1px solid var(--softGrey);
+}
+
+main aside .stats .stats-panel > section span:first-child {
+	font-family: 'Kode Mono', monospace;
+	font-size: 1.5rem;
+}
+
+main aside .stats .stats-panel > section span:last-child {
+	color: var(--softGrey);
+	text-transform: uppercase;
+}
+
+main section {
+	width: 100%;
+}
+
+.about {
+	font-size: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	text-wrap-style: balance;
+}
+
+.header-container {
+	padding: 1rem 2.5rem;
+}
+
+.header-container h1 {
+	margin-bottom: 0;
+}
+
+.header-container p {
+	margin-left: 1rem;
+}
+
+.content-container {
+	padding: 1rem 2.5rem;
+	width: fit-content;
+	margin: 1rem;
+	padding: 1rem;
+	border-radius: 8px;
+	transition: all 0.3s ease-out;
+	transform: translate(0, 0);
+	box-shadow: 5px 5px 6px var(--accentColor);
+}
+
+.content-container:hover {
+	transform: translate(-5px, -5px);
+	box-shadow: 10px 10px 10px var(--accentColor);
+}
+
+.content-container h2 {
+	color: var(--accentColor);
+}
+
+.content-container p {
+	margin: 0.5rem 0;
+}
+
+.content-container .content-image {
+	margin: 1rem 0;
+}
+
+.content-container .content-image img {
+	width: 100%;
+	border-radius: 5px;
+}
+
+.content-container .content-image p {
+	font-size: 0.8rem;
+	text-align: left;
+	margin-top: 0rem;
+}
+
+code {
+	background-color: var(--accentColor);
+	color: var(--dark);
+	border-radius: 5px;
+	padding: 0.2rem 0.4rem;
+}
+
+.footer {
+	background-color: var(--dark);
+	color: var(--light);
+	text-align: left;
+	padding: 0.2rem 0.5rem;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	box-shadow: 0 -5px 5px var(--accentColor);
+}
+
+.footer a {
+	color: var(--accentColor);
+}
+
+.config-container {
+	margin: 1rem 1rem;
+}
+
+.providers {
+	display: flex;
+	flex-direction: column;
+}
+
+.providers > section {
+	display: flex;
+	flex-direction: column;
+}
+
+.available-providers, 
+.disable-providers {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.provider {
+	background-color: var(--dark);
+	border: 1px solid var(--softGrey);
+	color: var(--softGrey);
+
+	width: 128px;
+	aspect-ratio: 1/1;
+	padding: 0.5rem;
+	user-select: none;
+	cursor: pointer;
+	text-align: center;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.provider svg > * {
+	fill: var(--softGrey);
+}
+
+.provider.selected {
+	background-color: var(--providerColor);
+	border: 1px solid var(--light);
+	color: var(--light);
+}
+
+.provider.selected svg > * {
+	fill: var(--light);
+}
+
+.provider.disabled {
+	cursor: not-allowed;
+}
+
+.provider.disabled svg > * {
+	fill: var(--softGrey);
+}
+
+.view-container .header-container {
+	display: grid;
+	grid-template-columns: minmax(200px, 400px) 2fr;
+	grid-gap: 1rem;
+}
+
+.view-container .header-container img {
+	grid-column: 1;
+	width: 100%;
+	border-radius: 5px;
+}
+
+.view-container .header-container h1 {
+	grid-column: 2;
+}
+
+.view-container .track-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+	grid-gap: 1rem;
+}
+
+.track {
+	padding: 1rem;
+	border-radius: 8px;
+	transition: all 0.3s ease-out;
+	transform: translate(0, 0);
+	box-shadow: 5px 5px 6px var(--accentColor);
+	user-select: none;
+	cursor: pointer;
+}
+
+.track:hover {
+	transform: translate(-5px, -5px);
+	box-shadow: 10px 10px 10px var(--accentColor);
+}
+
+.track .seperator {
+	color: var(--accentColor);
+}
+
+.track .track-number {
+	font-size: 1.5rem;
+}
+
+.track .track-title {
+	font-size: 1.2rem;
+}
+
+.track .track-duration {
+	font-size: 1rem;
+}
+
+.moreinfo {
+	color: var(--accentColor);
+	cursor: pointer;
+	border: 2px solid var(--accentColor);
+	border-radius: 5px;
+	padding: 0.2rem 0.4rem;
+}
+
+.moreinfo:hover {
+	background-color: var(--accentColor);
+	color: var(--dark);
+}
+
+.hint {
+	color: var(--accentColor);
+	font-size: 0.8rem;
+	padding-left: 2rem;
+}
+
+.hint > .seperator {
+	color: var(--light);
+}
