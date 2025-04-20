@@ -19,6 +19,7 @@
 }
 
 .stats .stats-panel > section {
+	height: fit-content;
 	padding: 0.5rem;
 	display: flex;
 	flex-direction: column;
@@ -32,12 +33,69 @@
 	box-shadow: inset 0 -2.5rem 2.5rem 0 var(--dark);
 }
 
-.stats .stats-panel > section span:first-child {
+.stats .stats-panel > section > span:first-child {
 	font-family: 'Kode Mono', monospace;
 	font-size: 1.5rem;
 }
 
-.stats .stats-panel > section span:last-child {
+.stats .stats-panel > section > span:last-child {
+	z-index: 1;
 	color: var(--softGrey);
 	text-transform: uppercase;
+}
+
+.stats .stats-panel .stats-last {
+	padding: 0;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.stats .stats-panel .stats-last::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--dark);
+	border-radius: 0.25rem;
+	opacity: 0.5;
+	z-index: 0;
+}
+
+.stats .stats-panel > .stats-last > span:last-child {
+	padding: 0.5rem;
+	background: linear-gradient(180deg, #12121200 0%, #121212 100%);
+}
+
+.stats .stats-panel .stats-last img {
+	z-index: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	aspect-ratio: 1 / 1;
+	border-radius: 0.25rem;
+}
+
+.stats .stats-panel .stats-last .song-details {
+	padding: 0.5rem;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.stats .stats-panel .stats-last .song-title,
+.stats .stats-panel .stats-last .song-artist {
+	font-family: 'Inter', sans-serif;
+}
+
+.stats .stats-panel .stats-last .song-artist {
+	font-size: 0.875rem;
 }

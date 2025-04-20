@@ -1,6 +1,6 @@
 import { initNav } from '../components/nav.ts'
 import { initDisclaimer } from '../components/disclaimer.ts'
-import { initStats } from '../components/stats.ts'
+import { initStats, cleanupStats } from '../components/stats.ts'
 import { initSocials } from '../components/socials.ts'
 import { initDiscordEmbed } from '../components/discordEmbed.ts'
 import { initAvailableProviders } from '../components/availableProviders.ts'
@@ -23,5 +23,11 @@ export function initComponents() {
   initAvailableProviders()
   initDisabledProviders()
 }
+
+export function cleanupComponents() {
+  cleanupStats();
+}
+
+window.addEventListener('unload', cleanupComponents);
 
 initComponents();

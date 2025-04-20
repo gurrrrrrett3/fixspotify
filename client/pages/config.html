@@ -4,42 +4,39 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<link rel="stylesheet" href="../styles/shared.css" />
+    <meta name="theme-color" content="#1DB954" />
+    <meta property="og:site_name" content="fixSpotify" />
+    <meta property="og:title" content="fixSpotify | Config" />
+    <meta property="og:description" content="Enhances Spotify link sharing by improving how links appear on platforms like Discord. " />
 
+		<link rel="icon" type="image/svg+xml" href="../assets/icons/fixspotify.svg">
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-			rel="stylesheet"
-		/>
-
-    <script type="module" src="../components/nav.ts"></script>
-		<script type="module" src="../scripts/config.ts" defer></script>
-
-		<title>fixSpotify | config</title>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://rsms.me/">
+		<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+		<link rel="stylesheet" href="../styles/shared.css" />
+		<script src="../scripts/init.ts" type="module"></script>
+		<script src="../components/selectProvider.ts" type="module" defer></script>
+		<!-- <script type="module" src="../scripts/config.ts" defer></script> -->
+		<title>fixSpotify | Config</title>
 	</head>
 	<body>
-    <section id="nav-container"></section>
-
-		<div class="config-container">
-			<div class="content">
-				<h2>Preferred platform</h2>
-				<p>
-					Select your preferred platform to open links with. This will be saved, so whenever you open a
-					fixSpotify link, it will open with your preferred platform.
-				</p>
-			</div>
-		</div>
-
-		<section class="providers">
-			<section>
-				<span>Available</span>
-				<div class="available-providers" id="available-providers"></div>
-			</section>
-			<section>
-				<span>Coming soon</span>
-				<div class="disable-providers" id="disable-providers"></div>
-			</section>
+		<section id="nav-container"></section>
+		<section class="grid-wrapper">
+			<aside>
+				<section class="about">
+					<p>Enhances Spotify link sharing by improving how links appear on platforms like Discord.</p>
+					<p>By simply replacing <span style="color: var(--softGrey)">open.spotify.com</span> with <span style="color: var(--accentColor)">open.fixspotify.com</span> in your shared links, fixSpotify ensures that your Spotify links display correctly and consistently.</p>
+				</section>
+				<section id="stats-container"></section>
+				<section id="disclaimer-container"></section>
+				<section id="socials-container"></section>
+			</aside>
+			<main>
+				<section id="select-provider-container"></section>
+			</main>
 		</section>
 	</body>
 </html>
