@@ -14,7 +14,7 @@ export function initDisabledProviders() {
 
   const disabledProviders = `
     <section class="disabled-providers">
-      <span>Coming soon</span>
+      <h2>Coming soon</h2>
       <ul class="providers-list">
         ${providersList}
       </ul>

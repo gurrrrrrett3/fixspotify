@@ -6,8 +6,8 @@ let selectedProvider = localStorage.getItem("provider") || "FixSpotify";
 export function initSelectProvider() {
   const sectionElement = document.createElement('section');
   sectionElement.className = 'select-provider';
-  const spanElement = document.createElement('span');
-  spanElement.textContent = 'Preferred platform';
+  const h2Element = document.createElement('h2');
+  h2Element.textContent = 'Preferred platform';
   const ulElement = document.createElement('ul');
   ulElement.className = 'providers-list';
 
@@ -39,7 +39,7 @@ export function initSelectProvider() {
     });
 
   ulElement.append(...providersList);
-  sectionElement.appendChild(spanElement);
+  sectionElement.appendChild(h2Element);
   sectionElement.appendChild(ulElement);
 
   const selectProviderContainer = document.getElementById('select-provider-container');

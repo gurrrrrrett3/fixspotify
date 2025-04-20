@@ -1,0 +1,82 @@
+.visualizer-container {
+	padding: 1rem;
+	display: flex;
+	flex-flow: wrap;
+	flex-direction: row;
+	gap: 1rem;
+	border: 1px solid var(--softGrey);
+	background-color: rgba(18, 18, 18, 0.75);
+}
+
+.visualizer-container * {
+	font-family: 'Inter', sans-serif;
+}
+
+.visualizer-container img {
+	width: 16rem;
+	height: 16rem;
+	aspect-ratio: 1/1;
+	border-radius: 0.5rem;
+}
+
+.visualizer-container .details {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.visualizer-container .details > span:empty{
+  display: none;
+}
+
+.visualizer-container .details .title {
+	font-size: 1.5rem;
+	font-weight: 500;
+}
+
+.visualizer-container .details .album {
+	font-size: 0.875rem;
+	color: var(--softGrey);
+}
+
+.visualizer-container .details .type {
+	color: var(--softGrey);
+	font-family: 'Roboto Mono', monospace;
+	text-transform: uppercase;
+}
+
+.visualizer-container .tracks-container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.visualizer-container .tracks-container .track {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+}
+
+.visualizer-container .tracks-container .track .track-details {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
+}
+
+.visualizer-container .tracks-container .track .track-details span:last-child {
+	color: var(--softGrey);
+}
+
+.visualizer-container .tracks-container .track > span:first-child,
+.visualizer-container .tracks-container .track > span:last-child  {
+	color: var(--softGrey);
+}
+
+@media (max-width: 768px) {
+	.visualizer-container {
+		background-color: var(--discordGrey);
+	}
+}

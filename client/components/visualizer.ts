@@ -1,0 +1,138 @@
+import '../styles/visualizer.css'
+import '../styles/providers.css'
+import { providers } from "../scripts/providers.ts"
+import placeholder from "../assets/images/placeholder.svg"
+
+interface ItemData {
+  album: string;
+  albumArt: string;
+  artists: string;
+  name: string;
+  tracks: { id: string; name: string; artists: string; duration: number }[];
+}
+
+const url = new URL(location.href)
+const type = url.searchParams.get("type")
+const id = url.searchParams.get("id")
+if (!type || !id) {
+    document.body.innerHTML = "Invalid parameters"
+    throw new Error("Invalid parameters")
+}
+
+function addTrack(options: {
+  number: number,
+  id: string,
+  name: string,
+  artists: string,
+  duration: number
+}) {
+  const tracksContainer = document.getElementById("tracks") as HTMLDivElement;
+  const trackTemplate = document.getElementById("track-template") as HTMLAnchorElement;
+  const track = trackTemplate.cloneNode(true) as HTMLAnchorElement;
+
+  const idEl = track.querySelector("[id='track-id']") as HTMLSpanElement;
+  const nameEl = track.querySelector("[id='track-title']") as HTMLSpanElement;
+  const artistEl = track.querySelector("[id='track-artist']") as HTMLSpanElement;
+  const durationEl = track.querySelector("[id='track-duration']") as HTMLSpanElement;
+
+  const uniqueId = `track-${options.number}`;
+  idEl.id = `${uniqueId}-id`;
+  nameEl.id = `${uniqueId}-title`;
+  artistEl.id = `${uniqueId}-artist`;
+  durationEl.id = `${uniqueId}-duration`;
+
+  idEl.textContent = options.number.toString();
+  nameEl.textContent = options.name;
+  artistEl.textContent = options.artists;
+  durationEl.textContent = options.duration.toString();
+
+  track.removeAttribute("hidden");
+  track.href = `/view?type=track&id=${options.id}`;
+  tracksContainer.appendChild(track);
+}
+
+async function fetchData(): Promise<ItemData>  {
+  const response = await fetch(`https://open.fixspotify.com/api/info/${type}/${id}`);
+  return await response.json();
+}
+
+export async function initVisualizer() {
+  const data = await fetchData();
+
+  const typeEl = document.getElementById("type") as HTMLSpanElement;
+  typeEl.textContent = type!.charAt(0).toUpperCase() + type!.slice(1);
+
+  const coverEl = document.getElementById("cover") as HTMLImageElement;
+  const titleEl = document.getElementById("title") as HTMLSpanElement;
+  const albumEl = document.getElementById("album") as HTMLSpanElement;
+  const artistEl = document.getElementById("artist") as HTMLSpanElement;
+  // const descriptionEl = document.getElementById("description");
+  // const durationEl = document.getElementById("duration");
+
+  switch (type) {
+    case 'track':
+      if (coverEl) coverEl.src = data.albumArt ? data.albumArt : placeholder;
+      if (titleEl) titleEl.textContent = data.name;
+      if (albumEl) albumEl.textContent = data.album;
+      if (artistEl) artistEl.textContent = data.artists;
+      break;
+    case 'album':
+      if (coverEl) coverEl.src = data.albumArt ? data.albumArt : placeholder;
+      if (titleEl) titleEl.textContent = data.name;
+      if (albumEl) albumEl.textContent = data.album;
+      if (artistEl) artistEl.textContent = data.artists;
+      data.tracks!.forEach((track, index) => {
+          console.log('Track:', track);
+          addTrack({
+              number: index + 1,
+              id: track.id,
+              name: track.name,
+              artists: track.artists,
+              duration: track.duration
+          })
+      })
+      break;
+    case 'artist':
+      if (coverEl) coverEl.src = data.albumArt ? data.albumArt : placeholder;
+      if (titleEl) titleEl.textContent = data.name;
+      if (albumEl) albumEl.textContent = data.album;
+      if (artistEl) artistEl.textContent = data.artists;
+      break;
+    default:
+      break;
+  }
+}
+
+export function initProvidersRedirect() {
+  const types = ["track", "album", "artist"];
+
+  if (types.includes(type!)) {
+    const providersList = Object.entries(providers)
+    .filter(([_, provider]) => !provider.disabled)
+    .map(([_, provider]) => {
+      return `
+        <li class="provider-item" style="--providerColor: ${provider.color}">
+          <a href="/redirect/${_}/${type}/${id}" class="provider">
+            <img src="${provider.icon}" alt="${provider.name} icon">
+            <span>${provider.name}</span>
+          </a>
+        </li>
+      `;
+    }).join('');
+
+    const availableProviders = `
+      <section class="select-provider">
+        <h2>Open with</h2>
+        <ul class="providers-list">
+          ${providersList}
+        </ul>
+      </section>
+    `;
+    const availableProvidersContainer = document.getElementById('providers-redirect-container');
+    if (availableProvidersContainer) {
+      availableProvidersContainer.innerHTML = availableProviders;
+    }
+  }
+}
+initProvidersRedirect();
+initVisualizer();

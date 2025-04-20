@@ -35,7 +35,7 @@ async function updateStats() {
             <span>Track Requests</span>
           </section>
           <section class="stats-last">
-            <img src="${data.lastRequests[0].image}" alt="Last request Cover" />
+            ${data.lastRequests[0].image ? `<img src="${data.lastRequests[0].image}" alt="Cover of ${data.lastRequests[0].name} by ${data.lastRequests[0].description}" />` : ''}
             <section class="song-details">
               <span class="song-title" title="${data.lastRequests[0].name}">${data.lastRequests[0].name}</span>
               <span class="song-artist" title="${data.lastRequests[0].description}">${data.lastRequests[0].description}</span>

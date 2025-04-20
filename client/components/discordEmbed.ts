@@ -4,7 +4,7 @@ import cover from '../assets/images/starfall.webp'
 export function initDiscordEmbed() {
   const discordEmbed = `
     <section class="discord-embed">
-      <span>Before</span>
+      <h2>Before</h2>
       <section class="embed">
         <div class="profile-picture"></div>
         <section class="content">
@@ -15,7 +15,7 @@ export function initDiscordEmbed() {
           <p>https://open.spotify.com/intl-fr/track/05FpQ41MVtDd1Ft63DZNuv?si=eac825c45b6e4331</p>
         </section>
       </section>
-      <span>After</span>
+      <h2>After</h2>
       <section class="embed">
         <div class="profile-picture"></div>
         <section class="content">

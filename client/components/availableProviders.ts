@@ -15,7 +15,7 @@ export function initAvailableProviders() {
 
   const availableProviders = `
     <section class="available-providers">
-      <span>Available platform</span>
+      <h2>Available platform</h2>
       <ul class="providers-list">
         ${providersList}
       </ul>

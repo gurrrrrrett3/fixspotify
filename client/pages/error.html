@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="refresh" content="5;url=https://fixspotify.com" />
+		<!-- <meta http-equiv="refresh" content="5;url=https://fixspotify.com" /> -->
 		
     <meta name="theme-color" content="#1DB954" />
     <meta property="og:site_name" content="fixSpotify" />
@@ -24,7 +24,7 @@
 	<body>
 		<section id="nav-container"></section>
 		<section class="grid-wrapper">
-			<aside>
+			<aside class="error-hide">
 				<section class="about">
 					<p>Enhances Spotify link sharing by improving how links appear on platforms like Discord.</p>
 					<p>By simply replacing <span style="color: var(--softGrey)">open.spotify.com</span> with <span style="color: var(--accentColor)">open.fixspotify.com</span> in your shared links, fixSpotify ensures that your Spotify links display correctly and consistently.</p>
@@ -34,8 +34,16 @@
 				<section id="socials-container"></section>
 			</aside>
 			<main>
-				<h2>Whoops!</h2>
-				<p>We couldn't find that one, sorry! Redirecting you back to the home page in a few seconds...</p>
+				<section class="error">
+					<h2>Whoops! We couldn't find that one, sorry!</h2>
+					<a class="back" href="/">Go back</a>
+				</section>
+				<section class="error-code">
+					<svg viewBox="0 0 450 50">
+						<text x="0" y="55">404</text>
+						<text x="-5" y="50">404</text>
+					</svg>
+				</section>
 			</main>
 		</section>
 	</body>
