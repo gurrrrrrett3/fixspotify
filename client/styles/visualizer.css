@@ -66,12 +66,18 @@
 	gap: 0.125rem;
 }
 
-.visualizer-container .tracks-container .track .track-details span:last-child {
-	color: var(--softGrey);
+.visualizer-container .tracks-container .track > span:first-child {
+	width: 2ch;
+	text-align: right;
+	font-family: 'Roboto Mono', monospace;
 }
 
 .visualizer-container .tracks-container .track > span:first-child,
 .visualizer-container .tracks-container .track > span:last-child  {
+	color: var(--softGrey);
+}
+
+.visualizer-container .tracks-container .track .track-details span:last-child {
 	color: var(--softGrey);
 }
 
