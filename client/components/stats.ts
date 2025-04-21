@@ -32,7 +32,7 @@ async function updateStats() {
     const stats = `
       <section class="stats">
         <section class="stats-title">
-          <span>Stats</span>
+          <h2>Stats</h2>
         </section>
         <section class="stats-panel">
           <section class="stats-total">
