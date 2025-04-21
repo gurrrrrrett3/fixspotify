@@ -11,6 +11,8 @@ interface ItemData {
   artists: string;
   name: string;
   tracks: { id: string; name: string; artists: string; duration: number }[];
+  genres: string;
+  images: string[];
 }
 
 const url = new URL(location.href)
@@ -117,11 +119,11 @@ export async function initVisualizer() {
     case 'track':
       if (coverEl) coverEl.src = data.albumArt ? data.albumArt : placeholder;
       if (titleEl) titleEl.textContent = data.name;
-      if (albumEl) albumEl.textContent = data.album;
+      if (albumEl && data.name != data.album) albumEl.textContent = data.album;
       if (artistEl) artistEl.textContent = data.artists;
       break;
     case 'album':
-      if (coverEl) coverEl.src = data.albumArt ? data.albumArt : placeholder;
+      if (coverEl) coverEl.src = data.images[0] ? data.images[0] : placeholder;
       if (titleEl) titleEl.textContent = data.name;
       if (albumEl) albumEl.textContent = data.album;
       if (artistEl) artistEl.textContent = data.artists;
@@ -136,9 +138,9 @@ export async function initVisualizer() {
       })
       break;
     case 'artist':
-      if (coverEl) coverEl.src = data.albumArt ? data.albumArt : placeholder;
+      if (coverEl) coverEl.src = data.images[0] ? data.images[0] : placeholder;
       if (titleEl) titleEl.textContent = data.name;
-      if (albumEl) albumEl.textContent = data.album;
+      if (albumEl) albumEl.textContent = data.genres;
       if (artistEl) artistEl.textContent = data.artists;
       break;
     default:

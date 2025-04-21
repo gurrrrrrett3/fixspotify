@@ -69,19 +69,12 @@
 .visualizer-container .tracks-container .track {
 	display: none; /* none || flex*/ 
 	flex-direction: row;
-	align-items: center;
+	align-items: flex-start;
 	gap: 1rem;
 }
 
-.visualizer-container .tracks-container .track .track-details {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	gap: 0.125rem;
-}
-
 .visualizer-container .tracks-container .track > span:first-child {
-	width: 2ch;
+	width: 3ch;
 	text-align: right;
 }
 
@@ -89,6 +82,13 @@
 .visualizer-container .tracks-container .track > span:last-child  {
 	color: var(--softGrey);
 	font-family: 'Roboto Mono', monospace;
+}
+
+.visualizer-container .tracks-container .track .track-details {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.125rem;
 }
 
 .visualizer-container .tracks-container .track .track-details span:last-child {
