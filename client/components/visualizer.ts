@@ -2,6 +2,8 @@ import '../styles/visualizer.css'
 import '../styles/providers.css'
 import { providers } from "../scripts/providers.ts"
 import placeholder from "../assets/images/placeholder.svg"
+import ColorThief from 'colorthief';
+import { connect } from 'http2';
 
 interface ItemData {
   album: string;
@@ -17,6 +19,45 @@ const id = url.searchParams.get("id")
 if (!type || !id) {
     document.body.innerHTML = "Invalid parameters"
     throw new Error("Invalid parameters")
+}
+
+function getColors(image: HTMLImageElement): Promise<{ac: string, bg: string}> {
+  return new Promise((resolve, reject) => {
+    const colorThief = new ColorThief();
+
+    if (!image.complete) {
+      image.onload = () => {
+        const color = colorThief.getColor(image);
+        const ac = correctColor(color);
+        const bg = correctColor(color, 8);
+        resolve({
+          ac: `rgb(${ac[0]}, ${ac[1]}, ${ac[2]})`,
+          bg: `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`
+        });
+      }
+    } else {
+        const color = colorThief.getColor(image);
+        const ac = correctColor(color);
+        const bg = correctColor(color, 8);
+        resolve({
+          ac: `rgb(${ac[0]}, ${ac[1]}, ${ac[2]})`,
+          bg: `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`
+        });
+    }
+  })
+}
+
+function correctColor(color: number[], targetLuma = 128): number[] {
+  const [r, g, b] = color;
+  let currentLuma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+  if (currentLuma > targetLuma) {
+    const ratio = (currentLuma + 0.05) / (targetLuma + 0.05);
+    return [r / ratio, g / ratio, b / ratio];
+  } else {
+    const ratio = (targetLuma + 0.05) / (currentLuma + 0.05);
+    return [r * ratio, g * ratio, b * ratio];
+  }
 }
 
 function addTrack(options: {
@@ -48,6 +89,8 @@ function addTrack(options: {
 
   track.removeAttribute("hidden");
   track.href = `/view?type=track&id=${options.id}`;
+  track.style.display = 'flex';
+  tracksContainer.style.display = 'flex';
   tracksContainer.appendChild(track);
 }
 
@@ -59,6 +102,7 @@ async function fetchData(): Promise<ItemData>  {
 export async function initVisualizer() {
   const data = await fetchData();
 
+  const container = document.getElementById("visualizer-container") as HTMLDivElement;
   const typeEl = document.getElementById("type") as HTMLSpanElement;
   typeEl.textContent = type!.charAt(0).toUpperCase() + type!.slice(1);
 
@@ -82,7 +126,6 @@ export async function initVisualizer() {
       if (albumEl) albumEl.textContent = data.album;
       if (artistEl) artistEl.textContent = data.artists;
       data.tracks!.forEach((track, index) => {
-          console.log('Track:', track);
           addTrack({
               number: index + 1,
               id: track.id,
@@ -101,6 +144,9 @@ export async function initVisualizer() {
     default:
       break;
   }
+  
+  const coverColor = await getColors(coverEl);
+  container.setAttribute("style", `--coverColor: ${coverColor.ac}; --bgCoverColor: ${coverColor.bg}`);
 }
 
 export function initProvidersRedirect() {

@@ -11,6 +11,15 @@ interface StatsData {
   lastRequests: any[];
 }
 
+function formatNumber(number: number, decimalPlaces = 0): string {
+  return new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: decimalPlaces,
+    minimumFractionDigits: decimalPlaces,
+    useGrouping: true,
+    style: 'decimal'
+  }).format(number).replace(/,/g, ' ');
+}
+
 async function fetchStats(): Promise<StatsData> {
   const response = await fetch('https://fixspotify.com/stats');
   return await response.json();
@@ -19,7 +28,7 @@ async function fetchStats(): Promise<StatsData> {
 async function updateStats() {
   try {
     const data = await fetchStats();
-    console.log('Fetched stats:', data);
+    
     const stats = `
       <section class="stats">
         <section class="stats-title">
@@ -27,12 +36,16 @@ async function updateStats() {
         </section>
         <section class="stats-panel">
           <section class="stats-total">
-            <span>${data.counts.total}</span>
+            <span>${formatNumber(data.counts.total)}</span>
             <span>Total Requests</span>
           </section>
           <section class="stats-track">
-            <span>${data.counts.track}</span>
+            <span>${formatNumber(data.counts.track)}</span>
             <span>Track Requests</span>
+          </section>
+          <section class="stats-album">
+            <span>${formatNumber(data.counts.album)}</span>
+            <span>Album Requests</span>
           </section>
           <section class="stats-last">
             ${data.lastRequests[0].image ? `<img src="${data.lastRequests[0].image}" alt="Cover of ${data.lastRequests[0].name} by ${data.lastRequests[0].description}" />` : ''}
@@ -41,10 +54,6 @@ async function updateStats() {
               <span class="song-artist" title="${data.lastRequests[0].description}">${data.lastRequests[0].description}</span>
             </section>
             <span>Last Request</span>
-          </section>
-          <section class="stats-album">
-            <span>${data.counts.album}</span>
-            <span>Album Requests</span>
           </section>
         </section>
       </section>

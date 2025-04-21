@@ -22,7 +22,6 @@
 
 .disabled-providers > h2 {
   white-space: nowrap;
-  color: var(--softGrey);
 }
 
 .available-providers .providers-list {

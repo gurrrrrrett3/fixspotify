@@ -14,8 +14,20 @@
 	width: 100%;
 	display: grid;
   grid-template-columns: 1fr 1fr;
+	grid-template-areas: 
+		"total total"
+		"track album"
+		"last last";
 	grid-gap: 2rem;
 	gap: 1rem;
+}
+
+.stats .stats-panel .stats-total {
+	grid-area: total;
+}
+
+.stats .stats-panel .stats-last {
+	grid-area: last;
 }
 
 .stats .stats-panel > section {
@@ -48,7 +60,6 @@
 	padding: 0;
 	position: relative;
 	width: 100%;
-	/* aspect-ratio: 1 / 1; */
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
@@ -62,7 +73,6 @@
 	width: 100%;
 	height: 100%;
 	background-color: var(--dark);
-	border-radius: 0.25rem;
 	opacity: 0.5;
 	z-index: 0;
 }
@@ -83,7 +93,6 @@
 	height: 100%;
 	object-fit: cover;
 	aspect-ratio: 1 / 1;
-	border-radius: 0.25rem;
 }
 
 .stats .stats-panel .stats-last .song-details {

@@ -44,6 +44,7 @@ ul {
 	flex: 1;
 	display: grid;
 	grid-template-columns: 400px minmax(0, 1fr);
+	grid-template-areas: "sidebar content";
 	gap: 8rem;
 }
 
@@ -57,11 +58,19 @@ ul {
 @media (max-width: calc(868px + 8rem)) {
 	.grid-wrapper {
 		grid-template-columns: 1fr;
-		/* grid-template-areas: 
-			"sidebar"
-			"content"; */
+		grid-template-areas: 
+			"content"
+			"sidebar";
 		grid-gap: 2rem;
 	}
+}
+
+aside {
+	grid-area: sidebar;
+}
+
+main {
+	grid-area: content;
 }
 
 aside, main {
