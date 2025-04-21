@@ -40,7 +40,8 @@ ul {
 	list-style: none;
 }
 
-.grid-wrapper {
+.grid-wrapper,
+.grid-wrapper-index {
 	flex: 1;
 	display: grid;
 	grid-template-columns: 400px minmax(0, 1fr);
@@ -61,6 +62,14 @@ ul {
 		grid-template-areas: 
 			"content"
 			"sidebar";
+		grid-gap: 2rem;
+	}
+
+	.grid-wrapper-index {
+		grid-template-columns: 1fr;
+		grid-template-areas: 
+			"sidebar"
+			"content";
 		grid-gap: 2rem;
 	}
 }
