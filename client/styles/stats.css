@@ -45,9 +45,53 @@
 	box-shadow: inset 0 -2.5rem 2.5rem 0 var(--dark);
 }
 
-.stats .stats-panel > section > span:first-child {
-	font-family: 'Kode Mono', monospace;
+.stats .stats-panel > section > .animated-number {
+  display: flex;
+  overflow: hidden;
 	font-size: 1.5rem;
+}
+
+.stats .stats-panel > section > .animated-number .digit-wrapper {
+  position: relative;
+  height: 1lh;
+	width: 1ch;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.stats .stats-panel > section > .animated-number .digit-wrapper .digit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
+	font-family: 'Kode Mono', monospace;
+}
+
+.digit-exit {
+  animation: slideUp 300ms forwards;
+}
+
+.digit-enter {
+  transform: translateY(100%);
+  animation: slideIn 300ms forwards;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .stats .stats-panel > section > span:last-child {
@@ -110,7 +154,4 @@
 
 .stats .stats-panel .stats-last .song-artist {
 	font-size: 0.875rem;
-}
-
-@media (max-width: calc(868px + 8rem)) {
 }
