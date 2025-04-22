@@ -130,7 +130,7 @@ async function updateStats() {
 
 let intervalId: number | null = null;
 
-export function initStats(refreshInterval = 10000) {
+export function initStats(refreshInterval = 30000) {
   if (intervalId) {
     clearInterval(intervalId);
   }
