@@ -79,7 +79,6 @@ async function fetchStats(): Promise<StatsData> {
 async function updateStats() {
   try {
     const data = await fetchStats();
-    console.log(data)
     
     const stats = `
       <section class="stats">

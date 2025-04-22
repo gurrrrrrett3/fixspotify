@@ -104,8 +104,6 @@ async function fetchData(): Promise<ItemData>  {
 export async function initVisualizer() {
   const data = await fetchData();
 
-  console.log(data)
-
   const container = document.getElementById("visualizer-container") as HTMLDivElement;
   const typeEl = document.getElementById("type") as HTMLSpanElement;
   typeEl.textContent = type!.charAt(0).toUpperCase() + type!.slice(1);
