@@ -136,6 +136,7 @@
 
 .stats .stats-panel .stats-last a .song-title,
 .stats .stats-panel .stats-last a .song-artist {
+	overflow-wrap: break-word;
 	font-family: 'Inter', sans-serif;
 }
 
