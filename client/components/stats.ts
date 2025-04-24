@@ -9,12 +9,12 @@ interface StatsData {
     playlist: number;
   }
   lastRequests: {
-    addedAt?: number,
-    type?: string,
-    name?: string,
-    description?: string
-    image?: string,
-    url?: string
+    addedAt: number,
+    type: string,
+    name: string,
+    description: string
+    image: string,
+    url: string
   }[]
 }
 
@@ -88,7 +88,7 @@ function createAnimatedDigits(current: number, previous?: number): string {
   return container;
 }
 
-function createAnimatedText(current: string | undefined, previous?: string, delay: number): string {
+function createAnimatedText(current: string | undefined, previous: string, delay: number): string {
   let container = '<section class="animated-text">';
 
   if (current !== previous) {
@@ -175,7 +175,7 @@ async function updateStats() {
       const lastRequestArtist = statsContainer.querySelector('.stats-last .song-details .song-artist .animated-text') as HTMLDivElement;
 
       lastRequestSection.title = `${data.lastRequests[0].name} by ${data.lastRequests[0].description}`;
-      lastRequestSection.href = lastRequest.url!;
+      lastRequestSection.href = lastRequest.url;
       if (lastRequestTitle) lastRequestTitle.outerHTML = createAnimatedText(data.lastRequests[0].name, previousValues.lastRequests[0].name, 100);
       if (lastRequestArtist) lastRequestArtist.outerHTML = createAnimatedText(data.lastRequests[0].description, previousValues.lastRequests[0].description, 200);
       if (lastRequest.image) {
