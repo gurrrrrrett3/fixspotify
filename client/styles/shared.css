@@ -178,11 +178,36 @@ aside, main {
 	background-color: var(--accentColor);
 	color: var(--dark);
 	text-transform: uppercase;
+	transition: all 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+	overflow: hidden;
+}
+
+.error .back:hover {
+	box-shadow: inset 0 0 1px 1px var(--accentColor),
+							inset 1.5rem 0 0.625rem 1px var(--accentColor);
+	background-color: var(--dark);
+	color: var(--accentColor);
+}
+
+.error .back:hover::before {
+	color: var(--dark);
+	transform: translate(-0.5rem);
+	animation: lr 1000ms cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .error .back::before {
 	content: '';
 	font-family: 'Inter', sans-serif;
+	transition: all 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes lr {
+  0% {
+		transform: translate(0.7rem);
+  }
+  100% {
+		transform: translate(-0.5rem);
+  }
 }
 
 .error-code {

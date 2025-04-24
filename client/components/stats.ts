@@ -7,17 +7,34 @@ interface StatsData {
     album: number;
     artist: number;
     playlist: number;
-  };
-  lastRequests: any[];
+  }
+  lastRequests: {
+    addedAt?: number,
+    type?: string,
+    name?: string,
+    description?: string
+    image?: string,
+    url?: string
+  }[]
 }
 
-let previousValues: {
-  total?: number;
-  track?: number;
-  album?: number;
-  artist?: number;
-  playlist?: number;
-} = {};
+let previousValues: StatsData = {
+  counts: {
+    total: 0,
+    track: 0,
+    album: 0,
+    artist: 0,
+    playlist: 0,
+  },
+  lastRequests: [{
+    addedAt: 0,
+    type: '',
+    name: '',
+    description: '',
+    image: '',
+    url: ''
+  }]
+};
 
 function formatNumber(number: number, decimalPlaces = 0): string {
   return new Intl.NumberFormat('en-US', {
@@ -57,8 +74,8 @@ function createAnimatedDigits(current: number, previous?: number): string {
       } else {
         container += `
           <span class="digit-wrapper">
-            <span class="digit digit-exit" style="animation-delay: ${staggerDelay}ms;">${previousDigit === ' ' ? '&nbsp;' : previousDigit}</span>
-            <span class="digit digit-enter" style="animation-delay: ${staggerDelay}ms;">${currentDigit}</span>
+            <span class="digit item-exit" style="animation-delay: ${staggerDelay}ms;">${previousDigit === ' ' ? '&nbsp;' : previousDigit}</span>
+            <span class="digit item-enter" style="animation-delay: ${staggerDelay}ms;">${currentDigit}</span>
           </span>
         `;
       }
@@ -71,60 +88,121 @@ function createAnimatedDigits(current: number, previous?: number): string {
   return container;
 }
 
+function createAnimatedText(current: string | undefined, previous?: string, delay: number): string {
+  let container = '<section class="animated-text">';
+
+  if (current !== previous) {
+    container += `
+      <span class="text-wrapper">
+        <span class="text item-exit" style="animation-delay: ${delay}ms;">${previous}</span>
+        <span class="text item-enter" style="animation-delay: ${delay}ms;">${current}</span>
+      </span>
+    `;
+  } else {
+    container += `<span class="text-wrapper"><span class="text">${current}</span></span>`;
+  }
+  
+  container += '</section>';
+  return container;
+}
+
 async function fetchStats(): Promise<StatsData> {
   const response = await fetch('https://fixspotify.com/stats');
   return await response.json();
 }
 
+function initializeStatsContainer() {
+  const statsContainer = document.getElementById('stats-container');
+  if (!statsContainer) return;
+  
+  statsContainer.innerHTML = `
+    <section class="stats">
+      <section class="stats-title">
+        <h2>Stats</h2>
+      </section>
+      <section class="stats-panel">
+        <section class="stats-total">
+          <section class="animated-number"></section>
+          <span>Total Requests</span>
+        </section>
+        <section class="stats-track">
+          <section class="animated-number"></section>
+          <span>Track Requests</span>
+        </section>
+        <section class="stats-album">
+          <section class="animated-number"></section>
+          <span>Album Requests</span>
+        </section>
+        <section class="stats-last">
+          <a href="#">
+            <img src="" alt="" style="display: none;" />
+            <section class="song-details">
+              <span class="song-title">
+                <section class="animated-text"></section>
+              </span>
+              <span class="song-artist">
+                <section class="animated-text"></section>
+              </span>
+            </section>
+            <span>Last Request</span>
+          </a>
+        </section>
+      </section>
+    </section>
+  `;
+}
+
 async function updateStats() {
   try {
     const data = await fetchStats();
+    const statsContainer = document.getElementById('stats-container');
+    if (!statsContainer) return;
     
-    const stats = `
-      <section class="stats">
-        <section class="stats-title">
-          <h2>Stats</h2>
-        </section>
-        <section class="stats-panel">
-          <section class="stats-total">
-            ${createAnimatedDigits(data.counts.total, previousValues.total)}
-            <span>Total Requests</span>
-          </section>
-          <section class="stats-track">
-            ${createAnimatedDigits(data.counts.track, previousValues.track)}
-            <span>Track Requests</span>
-          </section>
-          <section class="stats-album">
-            ${createAnimatedDigits(data.counts.album, previousValues.album)}
-            <span>Album Requests</span>
-          </section>
-          <section class="stats-last">
-            <a href="${data.lastRequests[0].url}">
-              ${data.lastRequests[0].image ? `<img src="${data.lastRequests[0].type === "album" ? data.lastRequests[0].image.slice(24) : data.lastRequests[0].image}" alt="Cover of ${data.lastRequests[0].name} by ${data.lastRequests[0].description}" />` : ''}
-              <section class="song-details">
-                <span class="song-title">${data.lastRequests[0].name}</span>
-                <span class="song-artist">${data.lastRequests[0].description}</span>
-              </section>
-              <span>Last Request</span>
-            </a>
-          </section>
-        </section>
-      </section>
-    `;
+    const totalSection = statsContainer.querySelector('.stats-total .animated-number') as HTMLDivElement;
+    if (totalSection) totalSection.outerHTML = createAnimatedDigits(data.counts.total, previousValues.counts.total);
+    
+    const trackSection = statsContainer.querySelector('.stats-track .animated-number')as HTMLDivElement;
+    if (trackSection) trackSection.outerHTML = createAnimatedDigits(data.counts.track, previousValues.counts.track);
+    
+    const albumSection = statsContainer.querySelector('.stats-album .animated-number') as HTMLDivElement;
+    if (albumSection) albumSection.outerHTML = createAnimatedDigits(data.counts.album, previousValues.counts.album);
+    
+    if (data.lastRequests && data.lastRequests.length > 0) {
+      const lastRequest = data.lastRequests[0];
+      const lastRequestSection = statsContainer.querySelector('.stats-last a') as HTMLAnchorElement;
+      const lastRequestImage = statsContainer.querySelector('.stats-last img') as HTMLImageElement;
+      const lastRequestTitle = statsContainer.querySelector('.stats-last .song-details .song-title .animated-text') as HTMLDivElement;
+      const lastRequestArtist = statsContainer.querySelector('.stats-last .song-details .song-artist .animated-text') as HTMLDivElement;
+
+      lastRequestSection.title = `${data.lastRequests[0].name} by ${data.lastRequests[0].description}`;
+      lastRequestSection.href = lastRequest.url!;
+      if (lastRequestTitle) lastRequestTitle.outerHTML = createAnimatedText(data.lastRequests[0].name, previousValues.lastRequests[0].name, 100);
+      if (lastRequestArtist) lastRequestArtist.outerHTML = createAnimatedText(data.lastRequests[0].description, previousValues.lastRequests[0].description, 200);
+      if (lastRequest.image) {
+        const imageUrl = lastRequest.type === "album" ? lastRequest.image.slice(24) : lastRequest.image;
+        
+        if (imageUrl !== lastRequestImage.src && imageUrl !== previousValues.lastRequests[0].image) {
+          lastRequestImage.alt = `Cover of ${lastRequest.name} by ${lastRequest.description}`;
+          const tmpImg = new Image();
+          tmpImg.onload = () => {
+            lastRequestImage.src = imageUrl;
+            lastRequestImage.style.display = 'block';
+          };
+          tmpImg.src = imageUrl;
+        }
+      }
+    }
 
     previousValues = {
-      total: data.counts.total,
-      track: data.counts.track,
-      album: data.counts.album,
-      artist: data.counts.artist,
-      playlist: data.counts.playlist
+      counts: {
+        total: data.counts.total,
+        track: data.counts.track,
+        album: data.counts.album,
+        artist: data.counts.artist,
+        playlist: data.counts.playlist
+      },
+      lastRequests: [...data.lastRequests]
     };
-    
-    const statsContainer = document.getElementById('stats-container');
-    if (statsContainer) {
-      statsContainer.innerHTML = '';
-      statsContainer.innerHTML = stats;
-    }
   } catch (error) {
     console.error('Failed to load stats:', error);
   }
@@ -132,10 +210,11 @@ async function updateStats() {
 
 let intervalId: number | null = null;
 
-export function initStats(refreshInterval = 30000) {
+export function initStats(refreshInterval = 10000) {
   if (intervalId) {
     clearInterval(intervalId);
   }
+  initializeStatsContainer();
   updateStats();
   intervalId = window.setInterval(updateStats, refreshInterval);
 }

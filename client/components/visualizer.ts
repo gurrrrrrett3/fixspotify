@@ -3,7 +3,6 @@ import '../styles/providers.css'
 import { providers } from "../scripts/providers.ts"
 import placeholder from "../assets/images/placeholder.svg"
 import ColorThief from 'colorthief';
-import { connect } from 'http2';
 
 interface ItemData {
   album: string;
@@ -91,8 +90,11 @@ function addTrack(options: {
 
   track.removeAttribute("hidden");
   track.href = `/view?type=track&id=${options.id}`;
+  track.title = `${options.name} by ${options.artists}`
+  // track.href = `https://open.fixspotify.com/intl-fr/track/${options.id}`;
+  // console.log(options);
   track.style.display = 'flex';
-  tracksContainer.style.display = 'flex';
+  tracksContainer.style.display = 'grid';
   tracksContainer.appendChild(track);
 }
 
