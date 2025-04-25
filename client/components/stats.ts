@@ -1,15 +1,16 @@
 import '../styles/stats.css'
+import placeholder from "../assets/images/placeholder.svg"
 
 interface StatsData {
   counts: {
-    total: number;
-    track: number;
-    album: number;
-    artist: number;
-    playlist: number;
+    total?: number;
+    track?: number;
+    album?: number;
+    artist?: number;
+    playlist?: number;
   }
   lastRequests: {
-    addedAt: number,
+    addedAt?: number,
     type: string,
     name: string,
     description: string
@@ -20,14 +21,14 @@ interface StatsData {
 
 let previousValues: StatsData = {
   counts: {
-    total: 0,
-    track: 0,
-    album: 0,
-    artist: 0,
-    playlist: 0,
+    total: undefined,
+    track: undefined,
+    album: undefined,
+    artist: undefined,
+    playlist: undefined,
   },
   lastRequests: [{
-    addedAt: 0,
+    addedAt: undefined,
     type: '',
     name: '',
     description: '',
@@ -122,26 +123,26 @@ function initializeStatsContainer() {
       </section>
       <section class="stats-panel">
         <section class="stats-total">
-          <section class="animated-number"></section>
+          <section class="animated-number"><span class="digit-wrapper"><span class="digit"></span></span></section>
           <span>Total Requests</span>
         </section>
         <section class="stats-track">
-          <section class="animated-number"></section>
+          <section class="animated-number"><span class="digit-wrapper"><span class="digit"></span></span></section>
           <span>Track Requests</span>
         </section>
         <section class="stats-album">
-          <section class="animated-number"></section>
+          <section class="animated-number"><span class="digit-wrapper"><span class="digit"></span></section>
           <span>Album Requests</span>
         </section>
         <section class="stats-last">
           <a href="#">
-            <img src="" alt="" style="display: none;" />
+            <img src="" alt="No image" style="display: none"/>
             <section class="song-details">
               <span class="song-title">
-                <section class="animated-text"></section>
+                <section class="animated-text"><span class="text-wrapper"><span class="text"></span></section>
               </span>
               <span class="song-artist">
-                <section class="animated-text"></section>
+                <section class="animated-text"><span class="text-wrapper"><span class="text"></span></section>
               </span>
             </section>
             <span>Last Request</span>
@@ -159,13 +160,13 @@ async function updateStats() {
     if (!statsContainer) return;
     
     const totalSection = statsContainer.querySelector('.stats-total .animated-number') as HTMLDivElement;
-    if (totalSection) totalSection.outerHTML = createAnimatedDigits(data.counts.total, previousValues.counts.total);
+    if (totalSection) totalSection.outerHTML = createAnimatedDigits(data.counts.total!, previousValues.counts.total);
     
     const trackSection = statsContainer.querySelector('.stats-track .animated-number')as HTMLDivElement;
-    if (trackSection) trackSection.outerHTML = createAnimatedDigits(data.counts.track, previousValues.counts.track);
+    if (trackSection) trackSection.outerHTML = createAnimatedDigits(data.counts.track!, previousValues.counts.track);
     
     const albumSection = statsContainer.querySelector('.stats-album .animated-number') as HTMLDivElement;
-    if (albumSection) albumSection.outerHTML = createAnimatedDigits(data.counts.album, previousValues.counts.album);
+    if (albumSection) albumSection.outerHTML = createAnimatedDigits(data.counts.album!, previousValues.counts.album);
     
     if (data.lastRequests && data.lastRequests.length > 0) {
       const lastRequest = data.lastRequests[0];

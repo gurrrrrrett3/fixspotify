@@ -86,6 +86,7 @@
 }
 
 .stats .stats-panel .stats-last a {
+	height: fit-content;
 	display: flex;
 	flex-direction: column;
 	gap: 0.125rem;

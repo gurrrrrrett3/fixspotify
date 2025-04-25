@@ -114,8 +114,6 @@ export async function initVisualizer() {
   const titleEl = document.getElementById("title") as HTMLSpanElement;
   const albumEl = document.getElementById("album") as HTMLSpanElement;
   const artistEl = document.getElementById("artist") as HTMLSpanElement;
-  // const descriptionEl = document.getElementById("description");
-  // const durationEl = document.getElementById("duration");
 
   switch (type) {
     case 'track':
