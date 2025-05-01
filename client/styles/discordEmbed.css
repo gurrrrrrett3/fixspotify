@@ -1,4 +1,4 @@
-.discord-embed{
+.discord-embed {
 	width: fit-content;
 	display: flex;
 	flex-direction: column;
@@ -22,6 +22,14 @@
 	font-size: 0.875rem;
 }
 
+.profile-picture {
+	width: 32px;
+	height: 32px;
+	aspect-ratio: 1/1;
+	border-radius: 100%;
+	background-color: var(--accentColor);
+}
+
 .embed > div {
 	width: 32px;
 	height: 32px;
@@ -38,7 +46,7 @@
 }
 
 .embed .content * {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 }
 
 .embed .content .infos {
@@ -47,6 +55,10 @@
 	flex-direction: row;
 	align-items: center;
 	gap: 0.5rem;
+}
+
+.embed .content .infos .username {
+	color: var(--accentColor);
 }
 
 .embed .content .infos > span:last-child {

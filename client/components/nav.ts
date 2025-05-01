@@ -11,7 +11,8 @@ export function initNav() {
       <ul class="nav-menu">
         <li><a href="https://open.fixspotify.com" class="nav-link">Config</a></li>
         <li><a href="https://gart.sh/l/fixspotify" class="nav-link" target="_blank">Source</a></li>
-        <li><a href="https://ko-fi.com/gart_" class="nav-link" target="_blank">Buy me a coffee</a></li>
+        <li><a href="https://ko-fi.com/gart_" class="nav-link" target="_blank">Ko-Fi</a></li>
+        <li><a href="https://github.com/gurrrrrrett3/fixspotify/graphs/contributors" class="nav-link" target="_blank">Contributors</a></li>
       </ul>
     </nav>
   `;

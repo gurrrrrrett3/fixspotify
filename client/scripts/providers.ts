@@ -41,12 +41,15 @@ export const providers = {
         icon: tidal,
         disabled: true,
     },
-    soundcloud: {
-        name: "SoundCloud",
-        color: "#FF5500",
-        icon: soundcloud,
-        disabled: true,
-    },
+
+    // [gart] not sure how this will be handled, considering how soundcloud works 
+
+    // soundcloud: {    
+    //     name: "SoundCloud",
+    //     color: "#FF5500",
+    //     icon: soundcloud,
+    //     disabled: true,
+    // },
     appleMusic: {
         name: "Apple Music",
         color: "#FA243C",
@@ -65,10 +68,16 @@ export const providers = {
         icon: pandora,
         disabled: true,
     },
-    musicbrainz: {
-        name: "MusicBrainz",
-        color: "#BA478F",
-        icon: musicbrainz,
-        disabled: true,
-    },
+
+    // [gart] i dont know enough about musicbrainz to know if this is a good idea
+
+    // musicbrainz: {
+    //     name: "MusicBrainz",
+    //     color: "#BA478F",
+    //     icon: musicbrainz,
+    //     disabled: true,
+    // },
+
+    // i want to add last.fm, but soon tm
+
 } as Record<string, { name: string, color: string, icon: string, disabled?: true }>;

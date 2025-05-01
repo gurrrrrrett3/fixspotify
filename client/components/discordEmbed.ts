@@ -1,29 +1,30 @@
 import '../styles/discordEmbed.css'
 import cover from '../assets/images/starfall.webp'
+import profile from '../assets/images/profile.webp'
 
 export function initDiscordEmbed() {
   const discordEmbed = `
     <section class="discord-embed">
       <h2>Before</h2>
       <section class="embed">
-        <div class="profile-picture"></div>
+        <img class="profile-picture" src=${profile}></img>
         <section class="content">
           <section class="infos">
-            <span>gart</span>
+            <span class="username">max</span>
             <span>Today at 7:21 PM</span>
           </section>
-          <p>https://open.spotify.com/intl-fr/track/05FpQ41MVtDd1Ft63DZNuv?si=eac825c45b6e4331</p>
+          <p>https://open.spotify.com/track/05FpQ41MVtDd1Ft63DZNuv</p>
         </section>
       </section>
       <h2>After</h2>
       <section class="embed">
-        <div class="profile-picture"></div>
+          <img class="profile-picture" src=${profile}></img>
         <section class="content">
           <section class="infos">
-            <span>gart</span>
+            <span class="username">max</span>
             <span>Today at 7:21 PM</span>
           </section>
-          <p>https://open.fixspotify.com/intl-fr/track/05FpQ41MVtDd1Ft63DZNuv?si=eac825c45b6e4331</p>
+          <p>https://open.fixspotify.com/track/05FpQ41MVtDd1Ft63DZNuv</p>
           <section class="fixspotify-embed">
             <section class="infos">
               <span>FixSpotify</span>
