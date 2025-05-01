@@ -7,7 +7,7 @@ import indexRouter from "./routers/index.js";
 export default class Webserver {
 
     public static readonly PORT: number = parseInt(process.env.PORT || "3000");
-    public static readonly OPEN_SUBDOMAIN = "open"
+    public static readonly OPEN_SUBDOMAIN = "devopen"
 
     public server: Server;
     public app: Application;
