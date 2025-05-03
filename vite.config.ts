@@ -21,7 +21,6 @@ export default defineConfig({
         emptyOutDir: true,
         sourcemap: true,
         rollupOptions: {
-            // input: "client/index.html",
             input: routes,
         }
     },
