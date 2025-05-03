@@ -1,7 +1,7 @@
 import '../styles/providers.css'
 import { providers } from '../scripts/providers.ts'
 
-let selectedProvider = localStorage.getItem("provider") || "FixSpotify";
+let selectedProvider = localStorage.getItem("provider") || "fixSpotify";
 
 export function initSelectProvider() {
   const sectionElement = document.createElement('section');
@@ -13,19 +13,19 @@ export function initSelectProvider() {
 
   const providersList = Object.entries(providers)
     .filter(([_, provider]) => !provider.disabled)
-    .map(([_, provider]) => {
+    .map(([providerId, provider]) => {
       const providerElement = document.createElement("li");
       providerElement.className = "provider-item";
       providerElement.setAttribute("style", `--providerColor: ${provider.color}`);
 
-      if (selectedProvider === provider.name) {
+      if (selectedProvider === providerId) {
         providerElement.classList.add("selected");
       }
 
       if (!provider.disabled) {
         providerElement.onclick = () => {
-          localStorage.setItem("provider", provider.name);
-          selectedProvider = provider.name;
+          localStorage.setItem("provider", providerId);
+          selectedProvider = providerId;
           initSelectProvider();
         }
       }
