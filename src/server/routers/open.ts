@@ -57,11 +57,10 @@ openRouter.get("/artist/:id", async (req, res) => {
 
 // handles redirecting to a provider
 openRouter.get("/redirect/:provider/:type/:id", async (req, res) => {
-    const provider = req.params.provider;
+    let provider = req.params.provider;
 
     if (!ProviderManager.validateProvider(provider)) {
-        res.status(400).send("Invalid provider");
-        return;
+        provider = "fixSpotify" // default provider
     }
 
     const type = req.params.type;

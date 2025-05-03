@@ -24,6 +24,7 @@ export const providers = {
         name: "Spotify (App)",
         color: "#1DB954",
         icon: spotify,
+        hideOnList: true,
     },
     youtube: {
         name: "YouTube",
@@ -80,4 +81,4 @@ export const providers = {
 
     // i want to add last.fm, but soon tm
 
-} as Record<string, { name: string, color: string, icon: string, disabled?: true }>;
+} as Record<string, { name: string, color: string, icon: string, disabled?: true, hideOnList?: true }>;

@@ -4,6 +4,7 @@ import { providers } from '../scripts/providers.ts'
 export function initAvailableProviders() {
   const providersList = Object.entries(providers)
     .filter(([_, provider]) => !provider.disabled)
+    .filter(([_, provider]) => !provider.hideOnList)
     .map(([_, provider]) => {
       return `
       <li class="provider-item">
