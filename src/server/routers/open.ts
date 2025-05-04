@@ -14,7 +14,7 @@ openRouter.use((req: Request, res: Response, next: NextFunction) => {
     console.log(`[OPEN] ${req.method} ${req.path}`);
 
     if (maintenanceMode) {
-        res.sendFile(resolve("./dist/client/pages/down.html"));
+        res.redirect("https://fixspotify.com/");
         return;
     }
 

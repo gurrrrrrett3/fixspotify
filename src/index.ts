@@ -18,4 +18,13 @@ if (process.env.ANALYTICS_ENABLED === "true") {
     AnalyticsManager.init(process.env.ANALYTICS_INSTANCE_ID as string);
 }
 
-export const maintenanceMode = process.env.MAINTENANCE_MODE === "true" || false;
+export function setMaintenanceMode(mode: boolean) {
+    if (mode) {
+        console.log("Maintenance mode enabled");
+    } else {
+        console.log("Maintenance mode disabled");
+    }
+    maintenanceMode = mode;
+}
+
+export var maintenanceMode = process.env.MAINTENANCE_MODE === "true" || false;

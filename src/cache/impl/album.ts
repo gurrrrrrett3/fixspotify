@@ -1,4 +1,5 @@
 import ClientManager from "../../manager/clientManager.js";
+import RequestErrorHandler from "../../manager/requestErrorHandler.js";
 import UpdateableCache from "../updatableCache.js";
 
 export interface MinimalAlbum {
@@ -22,7 +23,10 @@ export interface AlbumTrack {
 }
 
 export const AlbumCache = new UpdateableCache<MinimalAlbum>(async (id: string) => {
-    const album = await ClientManager.spotifyClient.client.albums.get(id);
+    const album = await ClientManager.spotifyClient.client.albums.get(id).catch((err) => {
+        RequestErrorHandler.handleRequestError(err);
+        return null;
+    });
 
     if (!album) {
         return null;

@@ -1,5 +1,6 @@
 import UpdateableCache from "../updatableCache.js";
 import ClientManager from "../../manager/clientManager.js";
+import RequestErrorHandler from "../../manager/requestErrorHandler.js";
 
 export interface MinimalTrack {
     id: string;
@@ -15,7 +16,10 @@ export interface MinimalTrack {
 }
 
 export const TrackCache = new UpdateableCache<MinimalTrack>(async (id: string) => {
-    const track = await ClientManager.spotifyClient.client.tracks.get(id);
+    const track = await ClientManager.spotifyClient.client.tracks.get(id).catch((err) => {
+        RequestErrorHandler.handleRequestError(err);
+        return null;
+    })
 
     if (!track) {
         return null;

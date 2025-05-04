@@ -21,6 +21,10 @@ export default class TemplateManager {
             throw new Error(`Template ${name} not found`)
         }
 
+        if (!data) {
+            data = {}
+        }
+
         data["name"] = name
 
         let template = TemplateManager.templates[name]
