@@ -49,26 +49,26 @@ function formatNumber(number: number, decimalPlaces = 0): string {
 function createAnimatedDigits(current: number, previous?: number): string {
   const currentStr = formatNumber(current);
   const previousStr = previous !== undefined ? formatNumber(previous) : currentStr;
-  
+
   let container = '<section class="animated-number">';
   const maxLength = Math.max(currentStr.length, previousStr.length);
   const paddedCurrent = currentStr.padStart(maxLength, ' ');
   const paddedPrevious = previousStr.padStart(maxLength, ' ');
-  
+
   const changedDigits = [];
   for (let i = 0; i < maxLength; i++) {
     if (paddedCurrent[i] !== paddedPrevious[i]) {
       changedDigits.push(i);
     }
   }
-  
+
   for (let i = 0; i < maxLength; i++) {
     const currentDigit = paddedCurrent[i];
     const previousDigit = paddedPrevious[i];
     const hasChanged = currentDigit !== previousDigit;
     const staggerIndex = changedDigits.indexOf(i);
     const staggerDelay = staggerIndex >= 0 ? staggerIndex * 100 : 0;
-    
+
     if (hasChanged) {
       if (currentDigit === ' ') {
         container += '<span class="digit-wrapper">&nbsp;</span>';
@@ -84,7 +84,7 @@ function createAnimatedDigits(current: number, previous?: number): string {
       container += `<span class="digit-wrapper"><span class="digit${currentDigit === ' ' ? ' digit-space' : ''}">${currentDigit === ' ' ? '&nbsp;' : currentDigit}</span></span>`;
     }
   }
-  
+
   container += '</section>';
   return container;
 }
@@ -102,7 +102,7 @@ function createAnimatedText(current: string | undefined, previous: string, delay
   } else {
     container += `<span class="text-wrapper"><span class="text">${current}</span></span>`;
   }
-  
+
   container += '</section>';
   return container;
 }
@@ -115,7 +115,7 @@ async function fetchStats(): Promise<StatsData> {
 function initializeStatsContainer() {
   const statsContainer = document.getElementById('stats-container');
   if (!statsContainer) return;
-  
+
   statsContainer.innerHTML = `
     <section class="stats">
       <section class="stats-title">
@@ -158,16 +158,16 @@ async function updateStats() {
     const data = await fetchStats();
     const statsContainer = document.getElementById('stats-container');
     if (!statsContainer) return;
-    
+
     const totalSection = statsContainer.querySelector('.stats-total .animated-number') as HTMLDivElement;
     if (totalSection) totalSection.outerHTML = createAnimatedDigits(data.counts.total!, previousValues.counts.total);
-    
-    const trackSection = statsContainer.querySelector('.stats-track .animated-number')as HTMLDivElement;
+
+    const trackSection = statsContainer.querySelector('.stats-track .animated-number') as HTMLDivElement;
     if (trackSection) trackSection.outerHTML = createAnimatedDigits(data.counts.track!, previousValues.counts.track);
-    
+
     const albumSection = statsContainer.querySelector('.stats-album .animated-number') as HTMLDivElement;
     if (albumSection) albumSection.outerHTML = createAnimatedDigits(data.counts.album!, previousValues.counts.album);
-    
+
     if (data.lastRequests && data.lastRequests.length > 0) {
       const lastRequest = data.lastRequests[0];
       const lastRequestSection = statsContainer.querySelector('.stats-last a') as HTMLAnchorElement;
@@ -181,7 +181,7 @@ async function updateStats() {
       if (lastRequestArtist) lastRequestArtist.outerHTML = createAnimatedText(data.lastRequests[0].description, previousValues.lastRequests[0].description, 200);
       if (lastRequest.image) {
         const imageUrl = lastRequest.type === "album" ? lastRequest.image.slice(24) : lastRequest.image;
-        
+
         if (imageUrl !== lastRequestImage.src && imageUrl !== previousValues.lastRequests[0].image) {
           lastRequestImage.alt = `Cover of ${lastRequest.name} by ${lastRequest.description}`;
           const tmpImg = new Image();
@@ -211,7 +211,7 @@ async function updateStats() {
 
 let intervalId: number | null = null;
 
-export function initStats(refreshInterval = 10000) {
+export function initStats(refreshInterval = 30000) {
   if (intervalId) {
     clearInterval(intervalId);
   }

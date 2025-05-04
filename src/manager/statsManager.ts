@@ -40,7 +40,7 @@ export default class StatsManager {
             url: type === "playlist" ? `https://open.spotify.com/playlist/${id}` : `https://open.fixspotify.com/view?type=${type}&id=${id}`
         });
 
-        if (this.lastRequests.length > 25) {
+        if (this.lastRequests.length > 3) {
             this.lastRequests.pop();
         }
 

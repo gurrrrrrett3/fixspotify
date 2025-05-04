@@ -17,8 +17,7 @@ export default class RequestErrorHandler {
                     setTimeout(() => {
                         console.log("Rate limit exceeded. Restarting server.")
                         setMaintenanceMode(false)
-                    }
-                        , retryAfterSeconds * 1000)
+                    }, retryAfterSeconds * 1000)
                 }
             }
         }
