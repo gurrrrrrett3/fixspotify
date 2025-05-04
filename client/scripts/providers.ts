@@ -38,7 +38,7 @@ export const providers = {
     },
     tidal: {
         name: "Tidal",
-        color: "#ffffff",
+        color: "#000000",
         icon: tidal,
     },
 
