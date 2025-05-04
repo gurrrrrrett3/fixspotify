@@ -1,5 +1,5 @@
 import UpdateableCache from "../updatableCache.js";
-import SpotifyApiManager from "../../manager/spotifyApiManager.js";
+import ClientManager from "../../manager/clientManager.js";
 
 export interface MinimalTrack {
     id: string;
@@ -15,7 +15,7 @@ export interface MinimalTrack {
 }
 
 export const TrackCache = new UpdateableCache<MinimalTrack>(async (id: string) => {
-    const track = await SpotifyApiManager.client.tracks.get(id);
+    const track = await ClientManager.spotifyClient.client.tracks.get(id);
 
     if (!track) {
         return null;
@@ -24,15 +24,15 @@ export const TrackCache = new UpdateableCache<MinimalTrack>(async (id: string) =
     return {
         id: track.id,
         name: track.name,
-        artists: SpotifyApiManager.formatArtists(track.artists),
-        duration: SpotifyApiManager.formatDuration(track.duration!),
+        artists: ClientManager.spotifyClient.formatArtists(track.artists),
+        duration: ClientManager.spotifyClient.formatDuration(track.duration!),
         album: track.album!.name,
         albumArt: track.album!.images ? track.album!.images[0].url.split("/").pop()! : "",
         images: track.album!.images.map((image) => image.url.split("/").pop()!),
         totalTracks: track.album!.totalTracks,
         trackNumber: track.trackNumber
             ? track.trackNumber : 0,
-        releaseDate: SpotifyApiManager.formatDate(track.album!.releaseDate, track.album!.releaseDatePrecision),
+        releaseDate: ClientManager.spotifyClient.formatDate(track.album!.releaseDate, track.album!.releaseDatePrecision),
         url: track.externalURL.spotify
     }
 }, {

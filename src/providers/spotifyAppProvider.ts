@@ -1,5 +1,4 @@
 import Provider, { ProviderOptions, ProviderType } from "../classes/provider.js";
-import SpotifyApiManager from "../manager/spotifyApiManager.js";
 
 export default class SpotifyProvider extends Provider {
     public readonly id = "spotifyapp";

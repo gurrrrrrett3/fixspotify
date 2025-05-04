@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { resolve } from 'path';
 import TemplateManager from '../../manager/templateManager.js';
-import SpotifyApiManager from '../../manager/spotifyApiManager.js';
 import ProviderManager from '../../manager/providerManager.js';
 import Provider, { ProviderType } from '../../classes/provider.js';
 import fetch from 'node-fetch';
 import { TrackCache } from '../../cache/impl/track.js';
 import { AlbumCache } from '../../cache/impl/album.js';
 import { maintenanceMode } from '../../index.js';
+import ClientManager from '../../manager/clientManager.js';
 const openRouter = Router();
 
 openRouter.use((req: Request, res: Response, next: NextFunction) => {
@@ -37,22 +37,22 @@ openRouter.get("/view", (req, res) => {
 
 // https://open.spotify.com/track/id
 openRouter.get("/track/:id", async (req, res) => {
-    res.send(TemplateManager.getTemplate("track", await SpotifyApiManager.getTrackEmbed(req.params.id)));
+    res.send(TemplateManager.getTemplate("track", await ClientManager.spotifyClient.getTrackEmbed(req.params.id)));
 })
 
 // https://open.spotify.com/album/id
 openRouter.get("/album/:id", async (req, res) => {
-    res.send(TemplateManager.getTemplate("album", await SpotifyApiManager.getAlbumEmbed(req.params.id)));
+    res.send(TemplateManager.getTemplate("album", await ClientManager.spotifyClient.getAlbumEmbed(req.params.id)));
 })
 
 // https://open.spotify.com/playlist/id
 openRouter.get("/playlist/:id", async (req, res) => {
-    res.send(TemplateManager.getTemplate("playlist", await SpotifyApiManager.getPlaylistEmbed(req.params.id)));
+    res.send(TemplateManager.getTemplate("playlist", await ClientManager.spotifyClient.getPlaylistEmbed(req.params.id)));
 })
 
 // https://open.spotify.com/artist/id
 openRouter.get("/artist/:id", async (req, res) => {
-    res.send(TemplateManager.getTemplate("artist", await SpotifyApiManager.getArtistEmbed(req.params.id)));
+    res.send(TemplateManager.getTemplate("artist", await ClientManager.spotifyClient.getArtistEmbed(req.params.id)));
 })
 
 // handles redirecting to a provider
@@ -138,7 +138,7 @@ openRouter.get("/api/info/:type/:id", async (req, res) => {
             break;
         case ProviderType.Artist:
 
-            const artist = await SpotifyApiManager.client.artists.get(id);
+            const artist = await ClientManager.spotifyClient.client.artists.get(id);
 
             if (!artist) {
                 res.status(404).send("Artist not found");
@@ -156,7 +156,7 @@ openRouter.get("/api/info/:type/:id", async (req, res) => {
             break;
         case ProviderType.Playlist:
 
-            const playlist = await SpotifyApiManager.client.playlists.get(id);
+            const playlist = await ClientManager.spotifyClient.client.playlists.get(id);
 
             if (!playlist) {
                 res.status(404).send("Playlist not found");

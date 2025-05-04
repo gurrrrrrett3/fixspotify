@@ -40,7 +40,6 @@ export const providers = {
         name: "Tidal",
         color: "#ffffff",
         icon: tidal,
-        disabled: true,
     },
 
     // [gart] not sure how this will be handled, considering how soundcloud works 

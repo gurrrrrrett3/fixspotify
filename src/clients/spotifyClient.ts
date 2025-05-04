@@ -1,15 +1,15 @@
-import { Artist, Client, Track } from "spotify-api.js";
+import { Artist, Client as SpotifyApiClient, Track } from "spotify-api.js";
 import { TrackCache } from "../cache/impl/track.js";
 import { AlbumCache } from "../cache/impl/album.js";
 import AnalyticsManager from "../analytics/analyticsManager.js";
-import StatsManager from "./statsManager.js";
+import StatsManager from "../manager/statsManager.js";
 
-export default class SpotifyApiManager {
+export default class SpotifyClient {
 
-    public static client: Client;
+    public client: SpotifyApiClient;
 
-    public static async init(): Promise<void> {
-        this.client = new Client({
+    constructor() {
+        this.client = new SpotifyApiClient({
             token: {
                 clientID: process.env.SPOTIFY_CLIENT_ID as string,
                 clientSecret: process.env.SPOTIFY_CLIENT_SECRET as string
@@ -24,7 +24,7 @@ export default class SpotifyApiManager {
         });
     }
 
-    public static formatArtists(artists: Artist[] | undefined): string {
+    public formatArtists(artists: Artist[] | undefined): string {
         if (!artists) {
             return "";
         }
@@ -32,14 +32,14 @@ export default class SpotifyApiManager {
         return artists.map(artist => artist.name).join(", ");
     }
 
-    public static formatDuration(duration: number): string {
+    public formatDuration(duration: number): string {
         const minutes = Math.floor(duration / 60000);
         const seconds = ((duration % 60000) / 1000).toFixed(0);
 
         return `${minutes}:${parseInt(seconds) < 10 ? '0' : ''}${seconds}`;
     }
 
-    public static formatNumber(number: number, precision: number = 2): string {
+    public formatNumber(number: number, precision: number = 2): string {
         const units = ["", "K", "M", "B", "T"];
 
         let unit = Math.floor((number.toFixed(0).length - 1) / 3) * 3;
@@ -48,7 +48,7 @@ export default class SpotifyApiManager {
         return num.toFixed(precision) + units[unit / 3];
     }
 
-    public static formatDate(date: string, datePrecision: string): string {
+    public formatDate(date: string, datePrecision: string): string {
         const [year, month, day] = date.split("-");
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -64,7 +64,7 @@ export default class SpotifyApiManager {
         }
     }
 
-    public static async getTrackEmbed(id: string): Promise<any> {
+    public async getTrackEmbed(id: string): Promise<any> {
         const track = await TrackCache.getOrFetch(id);
 
         if (!track) {
@@ -98,7 +98,7 @@ export default class SpotifyApiManager {
 
     }
 
-    public static async getAlbumEmbed(id: string): Promise<any> {
+    public async getAlbumEmbed(id: string): Promise<any> {
         const album = await AlbumCache.getOrFetch(id);
 
         if (!album) {
@@ -134,7 +134,7 @@ export default class SpotifyApiManager {
         }
     }
 
-    public static async getPlaylistEmbed(id: string): Promise<any> {
+    public async getPlaylistEmbed(id: string): Promise<any> {
         const [playlist, playlistTracks] = await Promise.all([
             this.client.playlists.get(id),
             this.client.playlists.getTracks(id, {
@@ -188,7 +188,7 @@ export default class SpotifyApiManager {
         }
     }
 
-    public static async getArtistEmbed(id: string): Promise<any> {
+    public async getArtistEmbed(id: string): Promise<any> {
         const artist = await this.client.artists.get(id);
 
         if (!artist) {
@@ -218,7 +218,7 @@ export default class SpotifyApiManager {
         }
     }
 
-    public static async getTrackAudioPreview(id: string): Promise<string | null> {
+    public async getTrackAudioPreview(id: string): Promise<string | null> {
         const track = await this.client.tracks.get(id);
 
         if (!track) {

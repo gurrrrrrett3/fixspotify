@@ -1,16 +1,16 @@
 import "dotenv/config";
 import Webserver from "./server/index.js";
 import TemplateManager from "./manager/templateManager.js";
-import SpotifyApiManager from "./manager/spotifyApiManager.js";
 import ProviderManager from "./manager/providerManager.js";
 import AnalyticsManager from "./analytics/analyticsManager.js";
 import StatsManager from "./manager/statsManager.js";
+import ClientManager from "./manager/clientManager.js";
 
 const server = new Webserver();
 
 server.start();
 TemplateManager.loadTemplates();
-SpotifyApiManager.init();
+ClientManager.init();
 ProviderManager.loadProviders();
 StatsManager.init();
 

@@ -1,12 +1,14 @@
 import { resolve } from "path";
 import Provider, { ProviderType } from "../classes/provider.js";
 import { readdirSync } from "fs";
-import SpotifyApiManager from "./spotifyApiManager.js";
 import { TrackCache } from "../cache/impl/track.js";
 import { AlbumCache } from "../cache/impl/album.js";
+import { Logger } from "@gart-sh/protocol";
+import ClientManager from "./clientManager.js";
 
 export default class ProviderManager {
     public static providers: Record<string, Provider> = {}
+    public static logger = new Logger("ProviderManager")
 
     public static async loadProviders(): Promise<void> {
         // Load providers from providers directory
@@ -15,7 +17,7 @@ export default class ProviderManager {
 
         for (const file of providerFiles) {
             const provider = new (await import(resolve(providersDir, file))).default as Provider
-            console.log(`Loaded provider ${provider.id}`)
+            this.logger.log(`Loaded provider ${provider.id}`)
             ProviderManager.providers[provider.id] = provider
         }
     }
@@ -49,7 +51,7 @@ export default class ProviderManager {
                 })
             }
             case ProviderType.Artist: {
-                const artist = await SpotifyApiManager.client.artists.get(id)
+                const artist = await ClientManager.spotifyClient.client.artists.get(id)
                 if (!artist) return undefined;
 
                 return ProviderManager.providers[provider].get(type, {
@@ -58,7 +60,7 @@ export default class ProviderManager {
                 })
             }
             case ProviderType.Playlist: {
-                const playlist = await SpotifyApiManager.client.playlists.get(id)
+                const playlist = await ClientManager.spotifyClient.client.playlists.get(id)
                 if (!playlist) return undefined;
 
                 return ProviderManager.providers[provider].get(type, {
