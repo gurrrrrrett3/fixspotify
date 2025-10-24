@@ -19,7 +19,7 @@
   "description": "",
   "dependencies": {
     "@distube/ytsr": "^2.0.4",
-    "@gart-sh/protocol": "github:gart-sh/protocol",
+    "@gurrrrrrett3/protocol": "^1.0.1",
     "@rollup/plugin-replace": "^6.0.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

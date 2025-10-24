@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { Logger } from "@gart-sh/protocol";
+import { Logger } from "@gurrrrrrett3/protocol";
 
 export default class TidalClient {
 

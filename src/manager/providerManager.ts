@@ -3,7 +3,7 @@ import Provider, { ProviderType } from "../classes/provider.js";
 import { readdirSync } from "fs";
 import { TrackCache } from "../cache/impl/track.js";
 import { AlbumCache } from "../cache/impl/album.js";
-import { Logger } from "@gart-sh/protocol";
+import { Logger } from "@gurrrrrrett3/protocol";
 import ClientManager from "./clientManager.js";
 
 export default class ProviderManager {

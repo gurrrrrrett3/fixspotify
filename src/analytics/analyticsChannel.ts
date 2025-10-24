@@ -1,4 +1,4 @@
-import { Channel } from "@gart-sh/protocol";
+import { Channel } from "@gurrrrrrett3/protocol";
 
 export const AnalyticsChannel = new Channel<{
     "analytics:init": {

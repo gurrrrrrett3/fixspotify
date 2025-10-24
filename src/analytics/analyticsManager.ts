@@ -1,4 +1,4 @@
-import { Client, Logger } from '@gart-sh/protocol'
+import { Client, Logger } from '@gurrrrrrett3/protocol'
 import { AnalyticsChannel } from './analyticsChannel.js';
 import CacheAnalytics from './cacheAnalytics.js';
 

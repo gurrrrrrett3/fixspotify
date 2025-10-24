@@ -3,12 +3,14 @@ import express, { Application } from "express";
 import { resolve } from "path";
 import openRouter from "./routers/open.js";
 import indexRouter from "./routers/index.js";
-import { Logger } from "@gart-sh/protocol";
+import { Logger } from "@gurrrrrrett3/protocol";
+import linkRouter from "./routers/link.js";
 
 export default class Webserver {
 
     public static readonly PORT: number = parseInt(process.env.PORT || "3000");
     public static readonly OPEN_SUBDOMAIN = "open"
+    public static readonly LINK_DOMAIN = "fixspotify.link"
 
     public logger = new Logger("Webserver")
 
@@ -24,10 +26,11 @@ export default class Webserver {
         this.app.use(express.urlencoded({ extended: true }));
 
         /*
-            We need to serve two subdomains:
+            We need to serve three subdomains/domains:
 
             fixspotify.com
             open.fixspotify.com - handles actual embeds
+            fixspotify.link - handles 
             
         */
 
@@ -36,6 +39,8 @@ export default class Webserver {
 
             if (req.hostname.startsWith(Webserver.OPEN_SUBDOMAIN + ".") || process.env.DEV_FORCE_OPEN === "true") {
                 openRouter(req, res, next);
+            } else if (req.hostname == Webserver.LINK_DOMAIN || process.env.DEV_FORCE_LINK == "true") {
+                linkRouter(req, res, next)
             } else {
                 indexRouter(req, res, next);
             }
