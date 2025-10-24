@@ -1,7 +1,2 @@
 User-agent: *
 Allow: /
-Disallow: /api
-Disallow: /track
-Disallow: /artist
-Disallow: /album
-Disallow: /playlist
